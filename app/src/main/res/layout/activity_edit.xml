@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".UI.Main.Profile_Fragment.EditActivity">
+
+
+    <FrameLayout
+        android:layout_width="@dimen/_95sdp"
+        android:layout_height="@dimen/_95sdp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_20sdp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_pic"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_90sdp"
+            android:src="@drawable/pp"
+            android:scaleType="centerCrop"
+            app:civ_border_color="@color/colorPrimary" />
+
+        <ImageView
+            android:id="@+id/edit_icon"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_50sdp"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:scaleType="fitXY"
+            android:src="@drawable/flatstylecircleedit"
+            android:contentDescription="@string/edit_icon" />
+    </FrameLayout>
+
+    <EditText
+        android:id="@+id/edit_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_7sdp"
+        android:layout_marginEnd="@dimen/_7sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@drawable/editbox_background"
+        android:drawablePadding="@dimen/_10sdp"
+        android:hint="@string/name"
+        android:inputType="textPassword"
+        android:padding="@dimen/_15sdp"
+        android:textColor="@color/colorPrimary"
+        android:textColorHighlight="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary" />
+
+    <EditText
+        android:id="@+id/edit_about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_7sdp"
+        android:layout_marginEnd="@dimen/_7sdp"
+        android:layout_marginTop="@dimen/_7sdp"
+        android:background="@drawable/editbox_background"
+        android:drawablePadding="@dimen/_10sdp"
+        android:hint="@string/about"
+        android:inputType="textPassword"
+        android:padding="@dimen/_15sdp"
+        android:textColor="@color/colorPrimary"
+        android:textColorHighlight="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary" />
+
+</LinearLayout>

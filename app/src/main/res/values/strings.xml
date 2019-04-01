@@ -1,0 +1,76 @@
+<resources>
+    <string name="app_name">Taallam</string>
+    <string name="backgroundimg">BackGroundImg</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forget_password">Forget Password?</string>
+    <string name="faceook">Faceook</string>
+    <string name="login">Login</string>
+    <string name="you_don_t_have_an_account_log_in_now">You don\'t have an account ? Log in now</string>
+    <string name="missing_email">Missing Email</string>
+    <string name="missing_password">Missing Password</string>
+    <string name="missing_name">Missing Name</string>
+    <string name="next">Next</string>
+    <string name="registration">Registration</string>
+    <string name="finish">Finish</string>
+    <string name="code">Code</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="missing_code">Missing Code</string>
+    <string name="Missing_confirmed_password">Missing Confirmed password</string>
+    <string name="not_matched">Not Matched</string>
+    <string name="not_valid_mail_msg">Please enter valid email</string>
+    <string name="wellcome">Wellcome</string>
+    <string name="main">Main</string>
+    <string name="categories">Categories</string>
+    <string name="notifications">Notifications</string>
+    <string name="profile">Profile</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search">Search Here</string>
+    <string name="messages">Messages</string>
+    <string name="search_hint">Search Hint</string>
+    <string name="no_data">No Data</string>
+    <string name="add_message">Add Message</string>
+    <string name="add_comment">Add Comment</string>
+    <string name="add">Add</string>
+    <string name="arrange">Arrange</string>
+    <string name="sort">Sort</string>
+    <string name="sort_by_levels">Sort by levels</string>
+    <string name="sort_by">sort by</string>
+    <string name="logo_image">logo image</string>
+    <string name="about_book">About Book</string>
+    <string name="teacher">Teacher</string>
+    <string name="participants">Participants</string>
+    <string name="duration">Duration</string>
+    <string name="followers">Followers</string>
+    <string name="chat">Chat</string>
+    <string name="read_book">Read Book</string>
+    <string name="book_interactions">Book Interactions</string>
+    <string name="learn_now">Learn Now</string>
+    <string name="about">About</string>
+    <string name="logout">Logout</string>
+    <string name="name">Name… </string>
+    <string name="edit">Edit</string>
+    <string name="levels">Levels</string>
+    <string name="number_of_subscribers">Number of subscribers</string>
+    <string name="follow">Follow</string>
+    <string name="unsubscribe">unsubscribe</string>
+
+    <string name="facebook_app_id">314108769291424</string>
+    <string name="fb_login_protocol_scheme">fb314108769291424</string>
+    <string name="arabic">Arabic</string>
+    <string name="edit_icon">edit icon</string>
+    <string name="logo">logo</string>
+    <string name="message">Message</string>
+    <string name="news_feed">News Feed</string>
+    <string name="studying_now">Studying now</string>
+    <string name="send_btn">Send</string>
+    <string name="required">Required</string>
+    <string name="register">Rregister</string>
+    <string name="book_detail">BookDetail</string>
+    <string name="follow_msg">You are now have a new friend</string>
+    <string name="unfollow">UnFollow</string>
+    <string name="upload">Uploaded</string>
+
+</resources>

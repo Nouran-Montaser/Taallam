@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.nouran.taallam">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/iconapp"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/iconapp"
+        android:screenOrientation="portrait"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.com.vansuita.pickimage.provider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/picker_provider_paths" />
+        </provider>
+
+        <activity
+            android:name=".UI.SplashScreenActivity"
+            android:logo="@drawable/iconapp"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".UI.Login.LoginActivity"
+            android:logo="@drawable/iconapp"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name=".UI.Main.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UI.Register.RegisterActivity"
+            android:parentActivityName=".UI.Login.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UI.ForgetPassword.ForgetPasswordActivity"
+            android:parentActivityName=".UI.Login.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UI.Wellcome.WellcomeActivity"
+            android:parentActivityName=".UI.Register.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UI.ForgetPassword.ForgetPassword2Activity"
+            android:parentActivityName=".UI.ForgetPassword.ForgetPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UI.Wellcome.Wellcome2Activity"
+            android:parentActivityName=".UI.Wellcome.WellcomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UI.Main.MessagesActivity"
+            android:parentActivityName=".UI.Main.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UI.Main.Main_Fragment.CommentsActivity"
+            android:parentActivityName=".UI.Main.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UI.Main.Category_Fragment.Books.BooksActivity"
+            android:parentActivityName=".UI.Main.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UI.Main.Category_Fragment.Books.BookDetailActivity"
+            android:parentActivityName=".UI.Main.Category_Fragment.Books.BooksActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UI.Main.Category_Fragment.Books.ReadBookActivity"
+            android:parentActivityName=".UI.Main.Category_Fragment.Books.BookDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UI.Main.Category_Fragment.Books.BookInteractionActivity"
+            android:parentActivityName=".UI.Main.Category_Fragment.Books.BookDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UI.Main.Profile_Fragment.EditActivity"
+            android:parentActivityName=".UI.Main.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UI.Main.Profile_Fragment.FollowActivity"
+            android:parentActivityName=".UI.Main.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UI.Main.Profile_Fragment.ChatActivity"
+            android:parentActivityName=".UI.Main.Profile_Fragment.FollowActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity android:name=".UI.Main.SearchActivity"></activity>
+    </application>
+
+</manifest>

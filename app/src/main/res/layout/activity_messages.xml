@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".UI.Main.MessagesActivity">
+
+
+<android.support.v7.widget.RecyclerView
+    android:id="@+id/msg_recycler_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="4dp"
+    android:visibility="visible"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:id="@+id/messages_emptycontainer">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_data"
+        android:textSize="@dimen/_20ssp"
+        android:id="@+id/messages_emptyView"/>
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/message_fab"
+        android:layout_width="@dimen/_56sdp"
+        android:layout_height="@dimen/_56sdp"
+        android:layout_gravity="bottom|end"
+        android:contentDescription="@string/add_message"
+        android:elevation="@dimen/fab_elevation"
+        android:src="@drawable/speechbubble"
+        app:fabCustomSize="@dimen/_56sdp"
+        app:fabSize="normal"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:layout_marginEnd="@dimen/_24sdp"
+        app:layout_anchorGravity="bottom|right|end"
+        app:pressedTranslationZ="@dimen/_12sdp" />
+
+</FrameLayout>

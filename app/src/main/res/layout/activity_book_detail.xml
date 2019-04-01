@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bground"
+    android:orientation="vertical"
+    tools:context=".UI.Main.Category_Fragment.Books.BookDetailActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_45sdp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/Book_DName"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="First Book"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_15ssp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/Book_DLevel"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="Level : 5"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/follow_btn"
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_margin="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:background="@drawable/follow_btn"
+                android:shadowColor="@android:color/transparent"
+                android:text="@string/follow"
+                android:textColor="#fff" />
+
+            <Button
+                android:id="@+id/unfollow_btn"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_margin="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:background="@drawable/follow_btn"
+                android:textSize="@dimen/_9sdp"
+                android:shadowColor="@android:color/transparent"
+                android:text="@string/unsubscribe"
+                android:textColor="#fff" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginBottom="@dimen/_7sdp"
+        tools:ignore="UselessParent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/aboutBook_lable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/about_book"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_15ssp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/aboutBook_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="test about book test test test test test test test"
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/_15ssp" />
+
+            <TextView
+                android:id="@+id/teacher_lable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/teacher"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_15ssp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/teacher_image"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:src="@drawable/pp"/>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_7sdp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/teacher_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-condensed"
+                        android:padding="@dimen/_5sdp"
+                        android:text="Nouran"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_18ssp" />
+
+                    <TextView
+                        android:id="@+id/teacher_txt2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-condensed"
+                        android:padding="@dimen/_5sdp"
+                        android:text="test"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="@dimen/_13ssp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/duration_lable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/duration"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_15ssp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/duration_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="February 27 , 2019  -  February 27 , 2019"
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/_15ssp" />
+
+            <TextView
+                android:id="@+id/Participants_lable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/participants"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_15ssp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/Participants_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="0 Participant"
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/_15ssp" />
+
+            <TextView
+                android:id="@+id/followers_lable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/followers"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_15ssp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/follower_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="5 Followers"
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/_15ssp" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

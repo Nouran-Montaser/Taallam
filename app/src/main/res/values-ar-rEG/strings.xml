@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">تعلم</string>
+    <string name="backgroundimg">صورة الخليفة</string>
+    <string name="email">بريد الكتروني</string>
+    <string name="password">كل المرور</string>
+    <string name="forget_password">نسيت كلمه المرور ؟</string>
+    <string name="faceook">فيس بوك</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="you_don_t_have_an_account_log_in_now">ليس لديك حساب ؟ التسجيل الان</string>
+    <string name="missing_email">البريد مفقود</string>
+    <string name="missing_password">كلمه السر مفقودة</string>
+    <string name="missing_name">الاسم مفقود</string>
+    <string name="next">التالي</string>
+    <string name="registration">تسجيل</string>
+    <string name="finish">انتهاء</string>
+    <string name="code">كود</string>
+    <string name="confirm_password">تأكيد كلمه المرور</string>
+    <string name="missing_code">الكود مفقود</string>
+    <string name="Missing_confirmed_password">تاكيد كلمه المرور مفقوده</string>
+    <string name="not_matched">ليس متطابق</string>
+    <string name="not_valid_mail_msg">الرجاء ادخال بريد صحيح</string>
+    <string name="wellcome">اهلا</string>
+    <string name="main">الرئيسية</string>
+    <string name="categories">الفئات</string>
+    <string name="notifications">اللاشعارات</string>
+    <string name="profile">شخصي</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search">ابحث هنا</string>
+    <string name="messages">الرسائل</string>
+    <string name="search_hint">Search Hint</string>
+    <string name="no_data">لا يوجود معلومات</string>
+    <string name="add_message">اضف</string>
+    <string name="add_comment">اضف</string>
+    <string name="add">اضف</string>
+    <string name="arrange">ترتيب</string>
+    <string name="sort">ترتيب</string>
+    <string name="sort_by_levels">ترتيب بالمستوي</string>
+    <string name="sort_by">ترتيب ع حسب</string>
+    <string name="logo_image">صوره اللوجو</string>
+    <string name="about_book">عن الكتاب</string>
+    <string name="teacher">المعم</string>
+    <string name="participants">المشاركين</string>
+    <string name="duration">المدة</string>
+    <string name="followers">المتابعين</string>
+    <string name="chat">الدردشة</string>
+    <string name="read_book">قراءه الكتاب</string>
+    <string name="book_interactions">التفاعلات علي اكتاب</string>
+    <string name="learn_now">تعلم الان</string>
+    <string name="about">عن</string>
+    <string name="logout">تسجيل الخروج</string>
+    <string name="name">الاسم..</string>
+    <string name="edit">تعديل</string>
+    <string name="levels">المستوايات</string>
+    <string name="number_of_subscribers">عدد المتابعين</string>
+    <string name="follow">متابعة</string>
+    <string name="unsubscribe">الغاء الاشتراك</string>
+
+    <string name="facebook_app_id">314108769291424</string>
+    <string name="fb_login_protocol_scheme">fb314108769291424</string>
+    <string name="arabic">عربي</string>
+</resources>

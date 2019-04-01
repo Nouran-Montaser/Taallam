@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="8dp"
+    android:layout_margin="@dimen/_5sdp">
+
+    <LinearLayout
+        android:background="@color/green"
+        android:id="@+id/main2_FContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_marginStart="@dimen/_7sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile2_image"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:src="@drawable/splash"
+                app:civ_border_color="#FF000000"
+                app:civ_border_width="@dimen/_2sdp" />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_7sdp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/main2_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:padding="@dimen/_5sdp"
+                    android:text="hjghgjhgjj"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_18ssp" />
+
+                <TextView
+                    android:id="@+id/main2_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:padding="@dimen/_5sdp"
+                    android:text="February 27 , 2019"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/main2_txt2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_7sdp"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:fontFamily="sans-serif-condensed"
+            android:padding="@dimen/_5sdp"
+            android:text="test"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_15ssp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/_7sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/main2_comments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:drawablePadding="@dimen/_10sdp"
+                android:drawableStart="@drawable/compositeclick"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textColorHighlight="@color/white" />
+
+            <TextView
+                android:id="@+id/main2_likes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/_10sdp"
+                android:drawableStart="@drawable/hearto"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textColorHighlight="@color/white" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

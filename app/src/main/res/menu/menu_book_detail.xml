@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/interactions"
+        app:showAsAction="collapseActionView|ifRoom"
+        android:icon="@drawable/formao"
+        android:showAsAction="collapseActionView|ifRoom"
+        android:title="@string/book_interactions"
+        tools:ignore="AppCompatResource" />
+
+    <item
+        android:id="@+id/read_book"
+        app:showAsAction="collapseActionView|ifRoom"
+        android:icon="@drawable/openbook"
+        android:showAsAction="collapseActionView|ifRoom"
+        android:title="@string/read_book"
+        tools:ignore="AppCompatResource" />
+</menu>

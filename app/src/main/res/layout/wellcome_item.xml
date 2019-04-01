@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/wellcome1_layout_container"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/wellcome_item_txt1"
+        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="test"
+        android:padding="@dimen/_7sdp"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/_18ssp"/>
+
+    <TextView
+        android:id="@+id/wellcome_item_txt2"
+        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="test test"
+        android:padding="@dimen/_7sdp"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/_16ssp"/>
+
+    <TextView
+        android:id="@+id/wellcome_item_txt3"
+        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:padding="@dimen/_7sdp"
+        android:text="5 levels - 1 teacher - 34 student - 20 Questions"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/_13ssp" />
+</LinearLayout>
+
+
+
