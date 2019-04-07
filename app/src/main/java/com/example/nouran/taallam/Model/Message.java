@@ -1,6 +1,7 @@
 package com.example.nouran.taallam.Model;
 
 public class Message {
+
     String ToUserID;
     String Body;
 

@@ -12,6 +12,7 @@
 
 
         <LinearLayout
+            android:id="@+id/search_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_7sdp"
@@ -35,6 +36,15 @@
                     android:text="Name"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/_18ssp" />
+
+            <!--<Button-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@drawable/addbtn"-->
+                <!--android:layout_marginStart="@dimen/_90sdp"-->
+                <!--android:layout_marginTop="@dimen/_10sdp"-->
+                <!--android:text="Follow"-->
+                <!--android:textColor="@color/white"/>-->
 
     </LinearLayout>
 

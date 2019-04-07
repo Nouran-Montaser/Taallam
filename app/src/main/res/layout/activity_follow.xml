@@ -85,6 +85,48 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_7sdp" />
 
+    <TextView
+        android:id="@+id/fno_books_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/empty"
+        android:visibility="gone"
+        android:textAlignment="center"
+        android:textSize="@dimen/_12sdp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/fabout_lable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_7sdp"
+        android:layout_marginTop="@dimen/_7sdp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="@string/about"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/_15ssp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/fabout_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_7sdp"
+        android:layout_marginTop="@dimen/_7sdp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="test about book test test test test test test test"
+        android:textColor="@color/dark_gray"
+        android:textSize="@dimen/_15ssp" />
+
+    <TextView
+        android:id="@+id/fno_about_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/empty"
+        android:visibility="gone"
+        android:textAlignment="center"
+        android:textSize="@dimen/_12sdp"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/Ffollowers_lable"

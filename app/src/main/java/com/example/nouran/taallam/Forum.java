@@ -4,9 +4,11 @@ import com.example.nouran.taallam.Model.BaseResponse;
 import com.example.nouran.taallam.Model.BookPosts;
 import com.example.nouran.taallam.Model.Comments;
 import com.example.nouran.taallam.Model.ForumBookPost;
+import com.example.nouran.taallam.Model.PostComment;
 import com.example.nouran.taallam.Model.UserHomeDetails;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
@@ -25,4 +27,6 @@ public interface Forum {
     @POST("Forum/GetBookPosts")
     public Call<ForumBookPost> getBookPosts(@Field("UserID") String UserID , @Field("BookID") int BookID);
 
+    @POST("Forum/DoAddPostComment")
+    public Call<BaseResponse> addPostComment(@Body PostComment postComment);
 }

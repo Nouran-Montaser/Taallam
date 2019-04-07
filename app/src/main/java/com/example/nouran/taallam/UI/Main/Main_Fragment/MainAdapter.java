@@ -2,25 +2,27 @@ package com.example.nouran.taallam.UI.Main.Main_Fragment;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.nouran.taallam.Date;
 import com.example.nouran.taallam.Model.HomePosts;
 import com.example.nouran.taallam.R;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-class MainAdapter extends RecyclerView.Adapter<MainAdapter.myHolder> {
+public class MainAdapter extends RecyclerView.Adapter<MainAdapter.myHolder> {
 
     private Context context;
     private ClickListener clickListener;
-    private HomePosts [] homePosts ;
+    private HomePosts[] homePosts;
 
 
-    public MainAdapter(Context context,HomePosts[] homePosts, ClickListener clickListener) {
+    public MainAdapter(Context context, HomePosts[] homePosts, ClickListener clickListener) {
         this.context = context;
         this.clickListener = clickListener;
         this.homePosts = homePosts;
@@ -36,28 +38,47 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.myHolder> {
     @Override
     public void onBindViewHolder(myHolder holder, final int position) {
 
-        Picasso.get().load(homePosts[position].getTeacherPictureURL()).placeholder(R.drawable.pp).
-                error(R.drawable.pp).into(holder.mProfileImage);
-        holder.mMainLikes.setText(homePosts[position].getLikesNumber()+"");
-        holder.mMainComments.setText(homePosts[position].getCommentsNumber()+"");
+        if (homePosts[position].getTeacherPictureURL() != null) {
+            Picasso.get().load(homePosts[position].getTeacherPictureURL()).placeholder(R.drawable.pp).
+                    error(R.drawable.pp).into(holder.mProfileImage);
+        }
+        holder.mMainLikes.setText(homePosts[position].getLikesNumber() + "");
+        holder.mMainComments.setText(homePosts[position].getCommentsNumber() + "");
 
         holder.mMainTxt.setText(homePosts[position].getTeacherName());
-        holder.mMainDate.setText(homePosts[position].getDatetime());
-        holder.mMainTxt2.setText(homePosts[position].getBody());
 
+
+        if (homePosts[position].getDatetime().length() == 19)
+        {
+            holder.mMainDate.setText(Date.format2Date(homePosts[position].getDatetime()));
+        }else
+            holder.mMainDate.setText(Date.formatDate(homePosts[position].getDatetime()));
+//        if ((homePosts[position].getDatetime()) != null) {
+//        if (Date.formatDate(homePosts[position].getDatetime()) != null) {
+//                holder.mMainDate.setText(Date.formatDate(homePosts[position].getDatetime()));
+//            } else
+//                holder.mMainDate.setText(Date.format3Date(homePosts[position].getDatetime()));
+//        }
+
+
+        holder.mMainTxt2.setText(homePosts[position].getBody());
         holder.mMainComments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickListener.OnClick("comment",homePosts[position].getPostID(),position);
+                clickListener.OnClick("comment", homePosts[position].getPostID(), position);
             }
         });
 
+        if (homePosts[position].getIsLiked())
+            holder.mMainLikes.setCompoundDrawablesWithIntrinsicBounds(R.drawable.hearto, 0, 0, 0);
         holder.mMainLikes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.mMainLikes.setCompoundDrawablesWithIntrinsicBounds(R.drawable.hearto,0,0,0);
-                holder.mMainLikes.setText((homePosts[position].getLikesNumber()+1)+"");
-                clickListener.OnClick("like",homePosts[position].getPostID(),position);
+                holder.mMainLikes.setCompoundDrawablesWithIntrinsicBounds(R.drawable.hearto, 0, 0, 0);
+                if (!homePosts[position].getIsLiked()) {
+                    holder.mMainLikes.setText((homePosts[position].getLikesNumber() + 1) + "");
+                }
+                clickListener.OnClick("like", homePosts[position].getPostID(), position);
             }
         });
     }
@@ -65,7 +86,7 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.myHolder> {
 
     @Override
     public int getItemCount() {
-        return 20;
+        return homePosts.length;
     }
 
     class myHolder extends RecyclerView.ViewHolder {

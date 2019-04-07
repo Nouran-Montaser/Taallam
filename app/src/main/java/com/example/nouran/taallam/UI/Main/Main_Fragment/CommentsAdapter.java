@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.nouran.taallam.Date;
 import com.example.nouran.taallam.Model.PostComments;
 import com.example.nouran.taallam.R;
 import com.squareup.picasso.Picasso;
@@ -34,7 +35,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.myHold
     public void onBindViewHolder(myHolder holder, final int position) {
 
         holder.mCommentContentTxt.setText(postComments[position].getBody());
-        holder.mCommentDateTxt.setText(postComments[position].getDateTime());
+        holder.mCommentDateTxt.setText(Date.formatDate(postComments[position].getDateTime()));
         holder.mCommentNameTxt.setText(postComments[position].getUserName());
         Picasso.get().load(postComments[position].getUserPictureURL()).placeholder(R.drawable.pp)
                 .error(R.drawable.pp).into(holder.mCommentPImg);

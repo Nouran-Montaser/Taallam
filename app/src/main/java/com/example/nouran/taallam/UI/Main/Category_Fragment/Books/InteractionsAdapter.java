@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.nouran.taallam.Date;
 import com.example.nouran.taallam.Model.BookPosts;
 import com.example.nouran.taallam.R;
 import com.squareup.picasso.Picasso;
@@ -36,7 +37,7 @@ public class InteractionsAdapter extends RecyclerView.Adapter<InteractionsAdapte
         Picasso.get().load(bookPosts[position].getTeacherPictureURL()).placeholder(R.drawable.pp).
                 error(R.drawable.pp).into(holder.mProfileImage);
 
-        holder.mMainDate.setText(bookPosts[position].getDatetime());
+        holder.mMainDate.setText(Date.format2Date(bookPosts[position].getDatetime()));
         holder.mMainTxt2.setText(bookPosts[position].getBody());
         holder.mMainComments.setText(bookPosts[position].getCommentsNumber()+"");
         holder.mMainLikes.setText(bookPosts[position].getLikesNumber()+"");

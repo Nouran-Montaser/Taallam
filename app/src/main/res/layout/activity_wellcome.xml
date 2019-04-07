@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/_8sdp"
-            android:text="This doesn't work. as you've set, it's the background, so the content overrides the rounded corne"
+            android:text="choose category  :"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/_14ssp" />
 
@@ -38,7 +38,8 @@
             android:id="@+id/welcome1_recyclerView"
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/_7sdp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_50sdp"/>
 
 
         <Button

@@ -2,11 +2,14 @@ package com.example.nouran.taallam.UI.Wellcome;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.nouran.taallam.Model.CoursesList;
 import com.example.nouran.taallam.UI.Main.Category_Fragment.CategoryClickListener;
@@ -17,12 +20,14 @@ public class WellcomeAdapter extends RecyclerView.Adapter<WellcomeAdapter.myHold
     private Context context;
     private CategoryClickListener categoryClickListener;
     private CoursesList [] coursesLists ;
+    private int pos = -1;
+    private String contextName;
 
-
-    public WellcomeAdapter(Context context , CoursesList [] coursesLists, CategoryClickListener categoryClickListener ) {
+    public WellcomeAdapter(Context context , CoursesList [] coursesLists, CategoryClickListener categoryClickListener, String contextName ) {
         this.context = context;
         this.categoryClickListener = categoryClickListener;
         this.coursesLists = coursesLists;
+        this.contextName = contextName ;
     }
 
     @Override
@@ -63,15 +68,35 @@ public class WellcomeAdapter extends RecyclerView.Adapter<WellcomeAdapter.myHold
 
 
         holder.mTxt3.setText(level + " - " + teacher +" - " + student +" - "+ question);
+
         holder.mLayoutContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                categoryClickListener.OnClick(coursesLists[position].getID());
+
+                if (contextName.equals("welcome"))
+                {
+
+                    pos = coursesLists[position].getID();
+                    notifyDataSetChanged();
+
+                }else
+                categoryClickListener.OnClick( coursesLists[position].getID(), position);
 
             }
         });
+        if (contextName.equals("welcome")) {
+            if (pos == coursesLists[position].getID()) {
+                holder.check.setVisibility(View.VISIBLE);
+            } else {
+                holder.check.setVisibility(View.GONE);
+            }
+        }
     }
 
+    public int getId ()
+    {
+        return pos;
+    }
 
     @Override
     public int getItemCount() {
@@ -84,6 +109,7 @@ public class WellcomeAdapter extends RecyclerView.Adapter<WellcomeAdapter.myHold
         TextView mTxt2;
         TextView mTxt1;
         LinearLayout mLayoutContainer;
+        ImageView check;
 
         public myHolder(final View itemView) {
             super(itemView);
@@ -91,6 +117,7 @@ public class WellcomeAdapter extends RecyclerView.Adapter<WellcomeAdapter.myHold
             mTxt2 = itemView.findViewById(R.id.wellcome_item_txt2);
             mTxt1 = itemView.findViewById(R.id.wellcome_item_txt1);
             mLayoutContainer = itemView.findViewById(R.id.wellcome1_layout_container);
+            check = itemView.findViewById(R.id.check_img);
         }
     }
 }

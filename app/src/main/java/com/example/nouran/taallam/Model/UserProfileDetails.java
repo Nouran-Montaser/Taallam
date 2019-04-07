@@ -18,7 +18,7 @@ public class UserProfileDetails
 
     private String UserPictureURL;
 
-    private String IsFollowing;
+    private boolean IsFollowing;
 
     private String ErrorMessage;
 
@@ -104,12 +104,12 @@ public class UserProfileDetails
         this.UserPictureURL = UserPictureURL;
     }
 
-    public String getIsFollowing ()
+    public boolean getIsFollowing ()
     {
         return IsFollowing;
     }
 
-    public void setIsFollowing (String IsFollowing)
+    public void setIsFollowing (boolean IsFollowing)
     {
         this.IsFollowing = IsFollowing;
     }

@@ -29,7 +29,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search">Search Here</string>
     <string name="messages">Messages</string>
-    <string name="search_hint">Search Hint</string>
+    <string name="search_hint">Search for user</string>
     <string name="no_data">No Data</string>
     <string name="add_message">Add Message</string>
     <string name="add_comment">Add Comment</string>
@@ -54,7 +54,6 @@
     <string name="edit">Edit</string>
     <string name="levels">Levels</string>
     <string name="number_of_subscribers">Number of subscribers</string>
-    <string name="follow">Follow</string>
     <string name="unsubscribe">unsubscribe</string>
 
     <string name="facebook_app_id">314108769291424</string>
@@ -67,10 +66,20 @@
     <string name="studying_now">Studying now</string>
     <string name="send_btn">Send</string>
     <string name="required">Required</string>
-    <string name="register">Rregister</string>
+    <string name="register">Register</string>
     <string name="book_detail">BookDetail</string>
     <string name="follow_msg">You are now have a new friend</string>
     <string name="unfollow">UnFollow</string>
     <string name="upload">Uploaded</string>
+    <string name="too_small">Too Small</string>
+    <string name="login_msg">Worng E-mail or Password</string>
+    <string name="no_followers">No Followers</string>
+    <string name="follow">Follow</string>
+    <string name="no_users_found">No users found</string>
+    <string name="search_title">Search</string>
+    <string name="interactions">Interactions</string>
+    <string name="search_for_user">Search for User</string>
+    <string name="sort_by_subscribes">Sort by subscribes</string>
+    <string name="empty">Empty</string>
 
 </resources>

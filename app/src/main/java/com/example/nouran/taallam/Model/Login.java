@@ -6,7 +6,7 @@ public class Login
 
     private String UserID;
 
-    private String IsFirstTime;
+    private boolean IsFirstTime;
 
     private String ErrorMessage;
 
@@ -32,12 +32,12 @@ public class Login
         this.UserID = UserID;
     }
 
-    public String getIsFirstTime ()
+    public boolean getIsFirstTime ()
     {
         return IsFirstTime;
     }
 
-    public void setIsFirstTime (String IsFirstTime)
+    public void setIsFirstTime (boolean IsFirstTime)
     {
         this.IsFirstTime = IsFirstTime;
     }

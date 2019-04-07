@@ -10,6 +10,7 @@ import com.example.nouran.taallam.Model.UserHomeDetails;
 import com.example.nouran.taallam.Model.UserProfileDetails;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -71,8 +72,8 @@ public interface Users {
 
     @Multipart
     @FormUrlEncoded
-    @POST("User/EditProfilePictureDetails/?{UserID}")
-    public Call<BaseResponse> editProfilePictureDetails(@Path("UserID") String UserID , @Part MultipartBody.Part test);
+    @POST("User/EditProfilePictureDetails")
+    public Call<BaseResponse> editProfilePictureDetails(@Query("UserID") String UserID , @Part("test") MultipartBody.Part test);
 
 //    @Multipart
 //    @POST("/upload")

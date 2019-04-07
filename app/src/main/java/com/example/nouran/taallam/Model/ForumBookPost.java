@@ -7,7 +7,7 @@ public class ForumBookPost {
 
     private boolean IsSuccess;
 
-    private BookPosts[] BookPosts;
+    private HomePosts[] BookPosts;
 
     private String BookName;
 
@@ -39,11 +39,11 @@ public class ForumBookPost {
         this.IsSuccess = IsSuccess;
     }
 
-    public BookPosts[] getBookPosts() {
+    public HomePosts[] getBookPosts() {
         return BookPosts;
     }
 
-    public void setBookPosts(BookPosts[] BookPosts) {
+    public void setBookPosts(HomePosts[] BookPosts) {
         this.BookPosts = BookPosts;
     }
 

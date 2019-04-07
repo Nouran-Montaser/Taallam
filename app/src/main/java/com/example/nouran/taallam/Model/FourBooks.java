@@ -23,7 +23,7 @@ public class FourBooks {
         return Percentage;
     }
 
-    public void setPercentage(float Percentage) {
+    public void setPercentage(int Percentage) {
         this.Percentage = Percentage;
     }
 

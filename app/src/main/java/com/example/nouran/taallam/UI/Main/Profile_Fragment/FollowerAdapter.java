@@ -46,6 +46,7 @@ public class FollowerAdapter extends RecyclerView.Adapter<FollowerAdapter.myHold
         holder.mFollowerPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (clickListener != null)
                 clickListener.OnClick(position);
             }
         });

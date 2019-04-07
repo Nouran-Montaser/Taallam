@@ -59,6 +59,15 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_7sdp" />
 
+        <TextView
+            android:id="@+id/no_books_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/empty"
+            android:visibility="gone"
+            android:textAlignment="center"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/about_lable"
@@ -82,6 +91,16 @@
             android:text="test about book test test test test test test test"
             android:textColor="@color/dark_gray"
             android:textSize="@dimen/_15ssp" />
+
+        <TextView
+            android:id="@+id/no_about_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/empty"
+            android:visibility="gone"
+            android:textAlignment="center"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/followers_Plable"
@@ -113,6 +132,15 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_7sdp" />
 
+        <TextView
+            android:id="@+id/no_followers_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/no_followers"
+            android:textAlignment="center"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold"
+            android:visibility="gone"/>
 
 
         <Button

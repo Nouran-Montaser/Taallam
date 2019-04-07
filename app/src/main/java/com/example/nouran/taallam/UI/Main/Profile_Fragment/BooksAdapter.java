@@ -2,6 +2,7 @@ package com.example.nouran.taallam.UI.Main.Profile_Fragment;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,11 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.myHolder> {
     @Override
     public void onBindViewHolder(myHolder holder, final int position) {
         holder.mBookName.setText(fourBooks[position].getBookName());
-        holder.mDonutProgress.setProgress(fourBooks[position].getPercentage());
+        String s = String.format("%.2f", fourBooks[position].getPercentage());
+        float number = Float.valueOf(s);
+        Log.i("LOPLOP",number+"");
+
+        holder.mDonutProgress.setProgress(number);
         holder.mAboutTxt.setText(fourBooks[position].getParticipantsNumber()+"");
     }
 
@@ -58,7 +63,6 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.myHolder> {
             mDonutProgress = itemView.findViewById(R.id.donut_progress);
             mAboutTxt = itemView.findViewById(R.id.about_txt);
             mBookName = itemView.findViewById(R.id.book_name);
-
         }
     }
 }

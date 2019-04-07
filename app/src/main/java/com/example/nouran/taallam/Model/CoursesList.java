@@ -1,7 +1,11 @@
 package com.example.nouran.taallam.Model;
 
-public class CoursesList
-{
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class CoursesList implements Parcelable {
+    private boolean isSelected = false;
+
     private int StudentsNumber;
 
     private int LevelsNumber;
@@ -71,6 +75,14 @@ public class CoursesList
         return ID;
     }
 
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
     public void setID (int ID)
     {
         this.ID = ID;
@@ -91,5 +103,48 @@ public class CoursesList
     {
         return "ClassPojo [StudentsNumber = "+StudentsNumber+", LevelsNumber = "+LevelsNumber+", Description = "+Description+", TeachersNumber = "+TeachersNumber+", QuestionsNumber = "+QuestionsNumber+", ID = "+ID+", Name = "+Name+"]";
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte(this.isSelected ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.StudentsNumber);
+        dest.writeInt(this.LevelsNumber);
+        dest.writeString(this.Description);
+        dest.writeInt(this.TeachersNumber);
+        dest.writeInt(this.QuestionsNumber);
+        dest.writeInt(this.ID);
+        dest.writeString(this.Name);
+    }
+
+    public CoursesList() {
+    }
+
+    protected CoursesList(Parcel in) {
+        this.isSelected = in.readByte() != 0;
+        this.StudentsNumber = in.readInt();
+        this.LevelsNumber = in.readInt();
+        this.Description = in.readString();
+        this.TeachersNumber = in.readInt();
+        this.QuestionsNumber = in.readInt();
+        this.ID = in.readInt();
+        this.Name = in.readString();
+    }
+
+    public static final Parcelable.Creator<CoursesList> CREATOR = new Parcelable.Creator<CoursesList>() {
+        @Override
+        public CoursesList createFromParcel(Parcel source) {
+            return new CoursesList(source);
+        }
+
+        @Override
+        public CoursesList[] newArray(int size) {
+            return new CoursesList[size];
+        }
+    };
 }
 

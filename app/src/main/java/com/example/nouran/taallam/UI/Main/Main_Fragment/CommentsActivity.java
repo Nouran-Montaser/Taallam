@@ -10,11 +10,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.nouran.taallam.Date;
 import com.example.nouran.taallam.Forum;
 import com.example.nouran.taallam.Model.BaseResponse;
+import com.example.nouran.taallam.Model.Comment;
 import com.example.nouran.taallam.Model.Comments;
 import com.example.nouran.taallam.Model.HomePosts;
+import com.example.nouran.taallam.Model.PostComment;
 import com.example.nouran.taallam.R;
 import com.example.nouran.taallam.RetrofitClient;
 import com.squareup.picasso.Picasso;
@@ -41,7 +45,9 @@ public class CommentsActivity extends AppCompatActivity {
     private LinearLayout mMain2FContainer;
     private CircleImageView mProfile2Image;
     private String userId;
-    private int postId,position;
+    private int postId, position;
+    private CommentsAdapter commentsAdapter;
+    private int commentCount;
 
 
     @Override
@@ -64,49 +70,73 @@ public class CommentsActivity extends AppCompatActivity {
         mProfile2Image = findViewById(R.id.profile2_image);
 
         userId = getIntent().getStringExtra("UserId");
-        postId = getIntent().getIntExtra("postID",0);
-        position = getIntent().getIntExtra("position",0);
+        postId = getIntent().getIntExtra("postID", 0);
+        position = getIntent().getIntExtra("position", 0);
 
         if (getIntent().getParcelableArrayListExtra("commentObj") != null) {
             ArrayList<HomePosts> homePosts = getIntent().getParcelableArrayListExtra("commentObj");
             Picasso.get().load(homePosts.get(position).getTeacherPictureURL()).placeholder(R.drawable.pp).
                     error(R.drawable.pp).into(mProfile2Image);
-            mMain2Likes.setText(homePosts.get(position).getLikesNumber()+"");
+            mMain2Likes.setText(homePosts.get(position).getLikesNumber() + "");
             mMain2Txt.setText(homePosts.get(position).getTeacherName());
-            mMain2Date.setText(homePosts.get(position).getDatetime());
+            mMain2Date.setText(Date.formatDate(homePosts.get(position).getDatetime()));
             mMain2Txt2.setText(homePosts.get(position).getBody());
-            mMain2Comments.setText(homePosts.get(position).getCommentsNumber()+"");
+            commentCount = homePosts.get(position).getCommentsNumber();
+            mMain2Comments.setText(homePosts.get(position).getCommentsNumber() + "");
         }
 
         mCommentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!mCommentEdt.getText().equals(""))
-                {
-
+                if (!mCommentEdt.getText().equals("")) {
+                    addComment(mCommentEdt.getText().toString());
+                    mCommentEdt.setText("");
                 }
 
             }
         });
 
-        getComments(userId,postId);
+        getComments(userId, postId);
     }
 
-    private void getComments(String userId , int postId) {
+    private void addComment(String comment) {
         Forum api = RetrofitClient.getClient(CommentsActivity.this).create(Forum.class);
-        Call<Comments> call = api.getPostComments(userId,postId);
+        Call<BaseResponse> call = api.addPostComment(new PostComment(new Comment(comment, postId), userId));
+        call.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                if (response.body() != null) {
+                    if (!response.body().getIsSuccess()) {
+                        Toast.makeText(CommentsActivity.this, response.body().getErrorMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        getComments(userId, postId);
+                        commentsAdapter.notifyDataSetChanged();
+                        mMain2Comments.setText((commentCount+1)+"");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                Log.i("Comment Failure", t.getMessage());
+            }
+        });
+    }
+
+    private void getComments(String userId, int postId) {
+        Forum api = RetrofitClient.getClient(CommentsActivity.this).create(Forum.class);
+        Call<Comments> call = api.getPostComments(userId, postId);
         call.enqueue(new Callback<Comments>() {
             @Override
             public void onResponse(Call<Comments> call, Response<Comments> response) {
-                if (response.body() != null)
-                {
-                    if (response.body().getIsSuccess())
-                    {
+                if (response.body() != null) {
+                    if (response.body().getIsSuccess()) {
                         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(CommentsActivity.this);
                         mCommentsRecyclerView.setHasFixedSize(true);
                         mCommentsRecyclerView.setLayoutManager(linearLayoutManager);
 
-                        mCommentsRecyclerView.setAdapter(new CommentsAdapter(CommentsActivity.this , response.body().getPostComments()));
+                        commentsAdapter = new CommentsAdapter(CommentsActivity.this, response.body().getPostComments());
+                        mCommentsRecyclerView.setAdapter(commentsAdapter);
                     }
                 }
             }

@@ -14,4 +14,8 @@ public interface Notifications {
     @POST("Notifications/GetAllUserNotifications")
     public Call<UserNotifications> getAllUserNotifications(@Field("UserID") String UserID);
 
+    @FormUrlEncoded
+    @POST("Notifications/UserUpdateSeenNotification")
+    public Call<BaseResponse> updateSeenNotification(@Field("UserID") String UserID , @Field("NotificationID") int NotificationID);
+
 }

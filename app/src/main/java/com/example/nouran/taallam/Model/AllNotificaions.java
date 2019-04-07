@@ -11,13 +11,13 @@ public class AllNotificaions {
 
     private String NotificationBody;
 
-    private String IsSeen;
+    private boolean IsSeen;
 
     private String FromUserID;
 
     private String UserPictureURL;
 
-    private String ID;
+    private int ID;
 
     public String getType() {
         return Type;
@@ -59,11 +59,11 @@ public class AllNotificaions {
         this.NotificationBody = NotificationBody;
     }
 
-    public String getIsSeen() {
+    public boolean getIsSeen() {
         return IsSeen;
     }
 
-    public void setIsSeen(String IsSeen) {
+    public void setIsSeen(boolean IsSeen) {
         this.IsSeen = IsSeen;
     }
 
@@ -83,11 +83,11 @@ public class AllNotificaions {
         this.UserPictureURL = UserPictureURL;
     }
 
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 

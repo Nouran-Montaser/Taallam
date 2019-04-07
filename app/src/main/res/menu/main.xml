@@ -9,8 +9,8 @@
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="collapseActionView|ifRoom"
         android:icon="@drawable/search"
-        android:showAsAction="collapseActionView|ifRoom"
-        android:title="@string/search"
+        android:showAsAction="always"
+        android:title="@string/search_for_user"
         android:actionViewClass="android.support.v7.widget.SearchView"
         tools:ignore="AppCompatResource" />
 

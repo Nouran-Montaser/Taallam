@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.nouran.taallam.Model.ConversationMessage;
+import com.example.nouran.taallam.Model.ConversationMessages;
 import com.example.nouran.taallam.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -17,9 +19,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ChatAdapter  extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
     private Context context;
+    private ConversationMessages[] conversationMessages;
 
-    public ChatAdapter(Context context) {
+    public ChatAdapter(Context context , ConversationMessages[] conversationMessages) {
         this.context = context;
+        this.conversationMessages = conversationMessages;
     }
 
     @Override
@@ -32,23 +36,24 @@ public class ChatAdapter  extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        if (position == 1 ) {
+        if (conversationMessages[position].getIsMine()) {
+            holder.messageTextView.setText(conversationMessages[position].getBody());
             holder.relativeLayout.setGravity(Gravity.END);
             holder.imageView.setVisibility(View.GONE);
             holder.messageTextView.setBackgroundResource(R.drawable.receive_message_background);
             holder.messageTextView.setTextColor(Color.WHITE);
         } else {
+            holder.messageTextView.setText(conversationMessages[position].getBody());
             holder.relativeLayout.setGravity(Gravity.START);
             holder.imageView.setVisibility(View.VISIBLE);
             holder.messageTextView.setBackgroundResource(R.drawable.send_message_background);
             holder.messageTextView.setTextColor(Color.BLACK);
         }
-        holder.messageTextView.setText("HI");
     }
 
     @Override
     public int getItemCount() {
-        return 2;
+        return conversationMessages.length;
     }
 
 

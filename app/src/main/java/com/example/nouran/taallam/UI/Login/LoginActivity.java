@@ -16,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nouran.taallam.Model.Login;
-import com.example.nouran.taallam.Model.Register;
 import com.example.nouran.taallam.UI.ForgetPassword.ForgetPasswordActivity;
 import com.example.nouran.taallam.UI.Main.MainActivity;
 import com.example.nouran.taallam.R;
@@ -24,22 +23,9 @@ import com.example.nouran.taallam.UI.Register.RegisterActivity;
 import com.example.nouran.taallam.UI.Wellcome.WellcomeActivity;
 import com.example.nouran.taallam.Users;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.facebook.Profile;
-import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.Arrays;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -61,6 +47,8 @@ public class LoginActivity extends Activity {
     private String id, name, birthday, gender, email;
     private Profile profile;
     private ProgressDialog mLogInProgress;
+    private static SharedPreferences sharedPrefs;
+    private final String MY_PREFS_NAME = "MyPrefsFile";
 
 
     @Override
@@ -76,6 +64,8 @@ public class LoginActivity extends Activity {
         mForgetPasswordTxt = findViewById(R.id.ForgetPassword_txt);
         mNoAccountTxt = findViewById(R.id.no_account_txt);
         mLoginMail = findViewById(R.id.login_mail);
+
+        checkLogIn();
 
 //        final List<String> permissionNeeds = Arrays.asList("user_photos", "email", "user_birthday", "public_profile");
 //        mFbloginButton.setOnClickListener(new View.OnClickListener() {
@@ -166,11 +156,14 @@ public class LoginActivity extends Activity {
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(mLoginMail.getText().toString()))
+                if (TextUtils.isEmpty(mLoginMail.getText().toString())) {
                     mLoginMail.setError(getString(R.string.missing_email));
-                if (TextUtils.isEmpty(mLoginPass.getText().toString()))
+                    mLoginMail.requestFocus();
+                }
+                if (TextUtils.isEmpty(mLoginPass.getText().toString())) {
                     mLoginPass.setError(getString(R.string.missing_password));
-                else {
+                    mLoginPass.requestFocus();
+                } else {
                     boolean check = android.util.Patterns.EMAIL_ADDRESS.matcher(mLoginMail.getText().toString()).matches();
                     if (check) {
                         mLogInProgress.setTitle("Logging In");
@@ -180,6 +173,7 @@ public class LoginActivity extends Activity {
                         signIn(mLoginMail.getText().toString(), mLoginPass.getText().toString());
                     } else {
                         Toast.makeText(LoginActivity.this, R.string.not_valid_mail_msg, Toast.LENGTH_SHORT).show();
+                        mLoginMail.requestFocus();
                     }
                 }
             }
@@ -206,12 +200,6 @@ public class LoginActivity extends Activity {
     }
 
     private void signIn(String mail, String pass) {
-
-        String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(),Settings.Secure.ANDROID_ID);
-//        InstanceID instanceID = InstanceID.getInstance(this);
-//        String token = instanceID.getToken(getString(R.string.gcm_defaultSenderId),
-//                GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://yaken.cloudapp.net/Ta3llam/Api/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -224,18 +212,28 @@ public class LoginActivity extends Activity {
                 try {
                     if (response.body().getIsSuccess()) {
                         mLogInProgress.dismiss();
-                        Intent mainactivityIntent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(mainactivityIntent);
+                        if (response.body().getIsFirstTime()) {
+                            Intent wellcomeIntent = new Intent(LoginActivity.this , WellcomeActivity.class);
+                            startActivity(wellcomeIntent);
+                        }
+                        else
+                        {
+                            Intent mainactivityIntent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(mainactivityIntent);
+                            finish();
+                        }
                         Toast.makeText(LoginActivity.this, "Done", Toast.LENGTH_SHORT).show();
                         SharedPreferences.Editor sharedPrefsEditor;
-                        final String MY_PREFS_NAME = "MyPrefsFile";
                         sharedPrefsEditor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                         sharedPrefsEditor.putString("UserID", response.body().getUserID());
                         sharedPrefsEditor.apply();
 
                         Log.i("LLLL", response.body().getUserID());
-                    } else
+                    } else {
                         Log.i("LLLL", response.body().getErrorMessage());
+                        mLogInProgress.dismiss();
+                        Toast.makeText(LoginActivity.this, response.body().getErrorMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -243,6 +241,9 @@ public class LoginActivity extends Activity {
 
             @Override
             public void onFailure(Call<Login> call, Throwable t) {
+                mLogInProgress.dismiss();
+                Log.i("FAILUER :", t.getMessage());
+                Toast.makeText(LoginActivity.this, R.string.login_msg, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -255,4 +256,22 @@ public class LoginActivity extends Activity {
         super.onActivityResult(requestCode, responseCode, data);
         callbackManager.onActivityResult(requestCode, responseCode, data);
     }
+
+    private void checkLogIn() {
+        sharedPrefs = getApplicationContext().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        String user_id_pref = sharedPrefs.getString("UserID", null);
+
+        if (user_id_pref != null) {
+            Intent StartIntent = new Intent(LoginActivity.this, MainActivity.class);
+            StartIntent.putExtra("UserID", user_id_pref);
+            startActivity(StartIntent);
+            finish();
+        }
+    }
+
 }
+//    String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+//        InstanceID instanceID = InstanceID.getInstance(this);
+//        String token = instanceID.getToken(getString(R.string.gcm_defaultSenderId),
+//                GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+

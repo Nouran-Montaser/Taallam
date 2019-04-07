@@ -1,11 +1,8 @@
 package com.example.nouran.taallam.UI.Main.Profile_Fragment;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ParseException;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -22,42 +19,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.nouran.taallam.Model.BaseResponse;
-import com.example.nouran.taallam.Model.Follow.Followers;
-import com.example.nouran.taallam.Model.HomePosts;
-import com.example.nouran.taallam.Model.Login;
 import com.example.nouran.taallam.Model.SixFollowers;
-import com.example.nouran.taallam.Model.User;
 import com.example.nouran.taallam.Model.UserProfileDetails;
 import com.example.nouran.taallam.R;
 import com.example.nouran.taallam.RetrofitClient;
 import com.example.nouran.taallam.UI.Login.LoginActivity;
-import com.example.nouran.taallam.UI.Main.MainActivity;
-import com.example.nouran.taallam.UI.Main.Main_Fragment.CommentsActivity;
 import com.example.nouran.taallam.Users;
 import com.squareup.picasso.Picasso;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import okhttp3.Interceptor;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -80,6 +58,10 @@ public class ProfileFragment extends Fragment {
     private SharedPreferences.Editor sharedPrefsEditor;
     private static final String MY_PREFS_NAME = "MyPrefsFile";
     private String mUserId;
+    private String user_name, about;
+    private TextView mNoFollowersTxt;
+    private TextView mNoAboutTxt;
+    private TextView mNoBooksTxt;
 
 
     public ProfileFragment() {
@@ -96,6 +78,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View mMainView = inflater.inflate(R.layout.fragment_profile, container, false);
+
         mProfileName = mMainView.findViewById(R.id.profile_name);
         mLearnNowLable = mMainView.findViewById(R.id.learn_now_lable);
         mBooksRecyclerView = mMainView.findViewById(R.id.books_recyclerView);
@@ -107,6 +90,9 @@ public class ProfileFragment extends Fragment {
         mAboutLable = mMainView.findViewById(R.id.about_lable);
         mLogoutButton = mMainView.findViewById(R.id.logout_button);
         mFollowersRecyclerView = mMainView.findViewById(R.id.followers_recyclerView);
+        mNoFollowersTxt = mMainView.findViewById(R.id.no_followers_txt);
+        mNoAboutTxt = mMainView.findViewById(R.id.no_about_txt);
+        mNoBooksTxt = mMainView.findViewById(R.id.no_books_txt);
 
         sharedPrefs = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         mUserId = sharedPrefs.getString("UserID", null);
@@ -125,6 +111,7 @@ public class ProfileFragment extends Fragment {
                         if (response.body().getIsSuccess()) {
                             Intent logOutIntent = new Intent(getActivity(), LoginActivity.class);
                             startActivity(logOutIntent);
+                            getActivity().finish();//when we are don't need to go back (no back button)
                         }
                     }
 
@@ -141,62 +128,99 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 Intent editIntent = new Intent(getActivity(), EditActivity.class);
                 editIntent.putExtra("USER_ID", mUserId);
+                editIntent.putExtra("Name", user_name);
+                editIntent.putExtra("About", about);
                 startActivity(editIntent);
             }
         });
         return mMainView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getBooks(mUserId);
+    }
+
     private void getBooks(String mUserId) {
 
         Users api = RetrofitClient.getClient(getActivity()).create(Users.class);
-        Call<UserProfileDetails> call = api.getUserProfileDetails("0e98041e-95ab-4a84-8d5d-ad0abb71a11e", "0e98041e-95ab-4a84-8d5d-ad0abb71a11e");
+        Call<UserProfileDetails> call = api.getUserProfileDetails(mUserId, mUserId);
         call.enqueue(new Callback<UserProfileDetails>() {
             @Override
             public void onResponse(Call<UserProfileDetails> call, Response<UserProfileDetails> response) {
+                Log.i("ERROE LL", "HERE 1");
 
-                if (response.body().getIsSuccess()) {
+                if (response.body() != null) {
+                    Log.i("ERROE LL", "HERE 2");
+                    if (response.body().getIsSuccess()) {
+                        Log.i("ERROE LL", "HERE 3");
 
-                    mProfileName.setText(response.body().getUserName());
-                    Picasso.get().load(response.body().getUserPictureURL()).placeholder(R.drawable.pp).
-                            error(R.drawable.pp).into(mProfilePic);
+                        user_name = response.body().getUserName();
+                        mProfileName.setText(response.body().getUserName());
 
-                    mAboutTxt.setText(response.body().getAbout());
+                        Picasso.get().load(response.body().getUserPictureURL()).placeholder(R.drawable.pp).
+                                error(R.drawable.pp).into(mProfilePic);
 
-                    if (response.body().getFollowersNumber() > 0) {
-                        LinearLayoutManager mFollowersLayout = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-                        mFollowersRecyclerView.setHasFixedSize(true);
-                        mFollowersRecyclerView.setLayoutManager(mFollowersLayout);
-                        Log.i("getFollowersListLen", response.body().getSixFollowers().length + "");
-                        mFollowersRecyclerView.setAdapter(new FollowerAdapter(getActivity(), response.body().getSixFollowers(),
-                                new FollowersClickListener() {
-                                    @Override
-                                    public void OnClick(int position) {
-                                        ArrayList<SixFollowers> sixfollowers = new ArrayList<>(Arrays.asList(response.body().getSixFollowers()));
-                                        Intent mFollowIntent = new Intent(getActivity(), FollowActivity.class);
-                                        mFollowIntent.putExtra("position", position);
-                                        mFollowIntent.putParcelableArrayListExtra("followerObj", sixfollowers);
-                                        startActivity(mFollowIntent);
-                                    }
-                                }));
+                        if (response.body().getAbout() != null) {
+                            about = response.body().getAbout();
+                            mAboutTxt.setVisibility(View.VISIBLE);
+                            mNoAboutTxt.setVisibility(View.GONE);
+                            mAboutTxt.setText(response.body().getAbout());
+                        } else if (response.body().getAbout() == null) {
+                            mAboutTxt.setVisibility(View.GONE);
+                            mNoAboutTxt.setVisibility(View.VISIBLE);
+                        }
 
-                    }
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-                    mBooksRecyclerView.setHasFixedSize(true);
-                    mBooksRecyclerView.setLayoutManager(linearLayoutManager);
+                        if (response.body().getFollowersNumber() == 0) {
+                            mNoFollowersTxt.setVisibility(View.VISIBLE);
+                            mFollowersRecyclerView.setVisibility(View.GONE);
+                        }
+                        if (response.body().getFollowersNumber() > 0) {
+                            mNoFollowersTxt.setVisibility(View.GONE);
+                            mFollowersRecyclerView.setVisibility(View.VISIBLE);
+                            LinearLayoutManager mFollowersLayout = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+                            mFollowersRecyclerView.setHasFixedSize(true);
+                            mFollowersRecyclerView.setLayoutManager(mFollowersLayout);
+                            Log.i("getFollowersListLen", response.body().getSixFollowers().length + "");
+                            mFollowersRecyclerView.setAdapter(new FollowerAdapter(getActivity(), response.body().getSixFollowers(),
+                                    new FollowersClickListener() {
+                                        @Override
+                                        public void OnClick(int position) {
+                                            ArrayList<SixFollowers> sixfollowers = new ArrayList<>(Arrays.asList(response.body().getSixFollowers()));
+                                            Intent mFollowIntent = new Intent(getActivity(), FollowActivity.class);
+                                            mFollowIntent.putExtra("position", position);
+                                            mFollowIntent.putExtra("followerObj", sixfollowers.get(position).getUserID());
 
-                    DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mBooksRecyclerView.getContext(),
-                            linearLayoutManager.getOrientation());
-                    mBooksRecyclerView.addItemDecoration(dividerItemDecoration);
-                    mBooksRecyclerView.setAdapter(new BooksAdapter(getActivity(), response.body().getFourBooks()));
+                                            startActivity(mFollowIntent);
+                                        }
+                                    }));
 
-                } else
-                    Log.i("LLLL", response.body().getErrorMessage());
+                        }
+                        if (response.body().getFourBooks().length > 0) {
+                            mBooksRecyclerView.setVisibility(View.VISIBLE);
+                            mNoBooksTxt.setVisibility(View.GONE);
+                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+                            mBooksRecyclerView.setHasFixedSize(true);
+                            mBooksRecyclerView.setLayoutManager(linearLayoutManager);
+
+                            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mBooksRecyclerView.getContext(),
+                                    linearLayoutManager.getOrientation());
+                            mBooksRecyclerView.addItemDecoration(dividerItemDecoration);
+                            mBooksRecyclerView.setAdapter(new BooksAdapter(getActivity(), response.body().getFourBooks()));
+
+                        } else {
+                            mBooksRecyclerView.setVisibility(View.GONE);
+                            mNoBooksTxt.setVisibility(View.VISIBLE);
+                        }
+                    } else
+                        Log.i("LLLL", response.body().getErrorMessage());
+                }
             }
 
             @Override
             public void onFailure(Call<UserProfileDetails> call, Throwable t) {
-
+                Log.i("ERROR LL", t.getMessage());
             }
         });
     }

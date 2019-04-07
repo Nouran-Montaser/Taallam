@@ -71,13 +71,13 @@ public class CategoryFragment extends Fragment {
                         mCategoryRecyclerView.setAdapter(new WellcomeAdapter(getActivity(), response.body().getCoursesList()
                                 , new CategoryClickListener() {
                             @Override
-                            public void OnClick(int position) {
+                            public void OnClick(int id ,int position) {
                                 Intent categoryIntent = new Intent(getActivity(), BooksActivity.class);
-                                categoryIntent.putExtra("CourseID", position);
+                                categoryIntent.putExtra("CourseID", id);
                                 startActivity(categoryIntent);
 
                             }
-                        }));
+                        },"category"));
                     }
                 }
             }

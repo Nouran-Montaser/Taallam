@@ -51,17 +51,25 @@ public class ForgetPassword2Activity extends AppCompatActivity {
         mFinishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(mCode.getText().toString()))
+                if (TextUtils.isEmpty(mCode.getText().toString())) {
                     mCode.setError(getString(R.string.missing_code));
-                if (TextUtils.isEmpty(mPass.getText().toString()))
+                    mCode.requestFocus();
+                }if (TextUtils.isEmpty(mPass.getText().toString())) {
                     mPass.setError(getString(R.string.missing_password));
-                if (TextUtils.isEmpty(mCPass.getText().toString()))
+                    mPass.requestFocus();
+                }if (TextUtils.isEmpty(mCPass.getText().toString())) {
                     mCPass.setError(getString(R.string.Missing_confirmed_password));
-                else {
+                    mCPass.requestFocus();
+                }if (mPass.length() < 6)
+                {
+                    mPass.setError(getString(R.string.too_small));
+                    mPass.requestFocus();
+                }else {
                     String mConfirmedPass = mCPass.getText().toString(), mPassword = mPass.getText().toString();
                     if (!mConfirmedPass.equals(mPassword)) {
                         mCPass.setError(getString(R.string.not_matched));
                         mPass.setError(getString(R.string.not_matched));
+                        mPass.requestFocus();
                         Toast.makeText(ForgetPassword2Activity.this, getString(R.string.not_matched), Toast.LENGTH_SHORT).show();
                     } else {
 
@@ -78,6 +86,7 @@ public class ForgetPassword2Activity extends AppCompatActivity {
                         call.enqueue(new Callback<BaseResponse>() {
                             @Override
                             public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                                mLogInProgress.dismiss();
                                 if (response.body() != null) {
                                     if (response.body().getIsSuccess()) {
                                         Intent mMainIntent = new Intent(ForgetPassword2Activity.this, MainActivity.class);
@@ -89,7 +98,7 @@ public class ForgetPassword2Activity extends AppCompatActivity {
 
                             @Override
                             public void onFailure(Call<BaseResponse> call, Throwable t) {
-
+                                mLogInProgress.dismiss();
                             }
                         });
                         Intent mMainIntent = new Intent(ForgetPassword2Activity.this, MainActivity.class);

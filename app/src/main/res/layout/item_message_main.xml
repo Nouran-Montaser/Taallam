@@ -8,6 +8,7 @@
     android:layout_marginRight="16dp"
     app:cardCornerRadius="8dp"
     app:cardElevation="8dp"
+    android:id="@+id/main_message_Container"
     android:layout_margin="@dimen/_5sdp">
 
     <LinearLayout
@@ -22,7 +23,7 @@
             android:orientation="horizontal">
 
             <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/comment_PImg"
+                android:id="@+id/message_PImg"
                 android:layout_width="@dimen/_60sdp"
                 android:layout_height="@dimen/_60sdp"
                 android:layout_marginTop="@dimen/_7sdp"
@@ -36,7 +37,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/comment_NameTxt"
+                    android:id="@+id/message_NameTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-condensed"
@@ -46,7 +47,7 @@
                     android:textSize="@dimen/_18ssp" />
 
                 <TextView
-                    android:id="@+id/comment_DateTxt"
+                    android:id="@+id/message_DateTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-condensed"
@@ -60,7 +61,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/comment_ContentTxt"
+            android:id="@+id/message_ContentTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_7sdp"

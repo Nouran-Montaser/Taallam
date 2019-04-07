@@ -1,5 +1,6 @@
 package com.example.nouran.taallam.UI.Main.Profile_Fragment;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
@@ -24,17 +25,27 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.androidnetworking.interfaces.UploadProgressListener;
 import com.example.nouran.taallam.Model.BaseResponse;
 import com.example.nouran.taallam.Model.UserProfileDetails;
 import com.example.nouran.taallam.R;
 import com.example.nouran.taallam.RetrofitClient;
 import com.example.nouran.taallam.UI.Main.MainActivity;
 import com.example.nouran.taallam.Users;
+import com.jacksonandroidnetworking.JacksonParserFactory;
+import com.nabinbhandari.android.permissions.PermissionHandler;
+import com.nabinbhandari.android.permissions.Permissions;
 import com.vansuita.pickimage.bean.PickResult;
 import com.vansuita.pickimage.bundle.PickSetup;
 import com.vansuita.pickimage.dialog.PickImageDialog;
 import com.vansuita.pickimage.listeners.IPickClick;
 import com.vansuita.pickimage.listeners.IPickResult;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.Objects;
@@ -42,10 +53,13 @@ import java.util.Objects;
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class EditActivity extends AppCompatActivity {
 
@@ -59,7 +73,7 @@ public class EditActivity extends AppCompatActivity {
     private static SharedPreferences sharedPrefs;
     private SharedPreferences.Editor sharedPrefsEditor;
     private static final String MY_PREFS_NAME = "MyPrefsFile";
-    private String mUserId;
+    private String mUserId, user_name, about;
 
 
     @Override
@@ -79,27 +93,43 @@ public class EditActivity extends AppCompatActivity {
         sharedPrefs = EditActivity.this.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         mUserId = sharedPrefs.getString("UserID", null);
 
+        user_name = getIntent().getStringExtra("Name");
+        about = getIntent().getStringExtra("About");
+
+        AndroidNetworking.initialize(getApplicationContext());
+        // Adding an Network Interceptor for Debugging purpose :
+        OkHttpClient okHttpClient = new OkHttpClient().newBuilder().build();
+        AndroidNetworking.initialize(getApplicationContext(), okHttpClient);
+        AndroidNetworking.setParserFactory(new JacksonParserFactory());
+
         mEditIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                PickSetup setup = new PickSetup();
+                String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                Permissions.check(EditActivity.this/*context*/, permissions, null/*rationale*/, null/*options*/, new PermissionHandler() {
+                    @Override
+                    public void onGranted() {
+                        // do your task.
+                        PickSetup setup = new PickSetup();
 
-                PickImageDialog.build(setup)
-                        .setOnClick(new IPickClick() {
-                            @Override
-                            public void onGalleryClick() {
-                                Intent intent = new Intent();
-                                intent.setType("image/*");
-                                intent.setAction(Intent.ACTION_GET_CONTENT);
-                                startActivityForResult(Intent.createChooser(intent, "Select Image"), GALLERY_PICK);
-                            }
+                        PickImageDialog.build(setup)
+                                .setOnClick(new IPickClick() {
+                                    @Override
+                                    public void onGalleryClick() {
+                                        Intent intent = new Intent();
+                                        intent.setType("image/*");
+                                        intent.setAction(Intent.ACTION_GET_CONTENT);
+                                        startActivityForResult(Intent.createChooser(intent, "Select Image"), GALLERY_PICK);
+                                    }
 
-                            @Override
-                            public void onCameraClick() {
-                                dispatchTakePictureIntent();
-                            }
-                        }).show(EditActivity.this);
+                                    @Override
+                                    public void onCameraClick() {
+                                        dispatchTakePictureIntent();
+                                    }
+                                }).show(EditActivity.this);
+                    }
+                });
             }
         });
     }
@@ -111,6 +141,15 @@ public class EditActivity extends AppCompatActivity {
         }
     }
 
+    private void tryr() {
+//        String filePath = getRealPathFromURIPath(uri, MainActivity.this);
+//        File file = new File(filePath);
+//        RequestBody mFile = RequestBody.create(MediaType.parse("image/*"), file);
+//        MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), mFile);
+//        RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
+
+    }
+
     private void uploadToServer(String filePath) {
 
         final ProgressDialog pd = new ProgressDialog(this);
@@ -118,38 +157,40 @@ public class EditActivity extends AppCompatActivity {
         pd.setCancelable(false);
         pd.show();
 
-        Users api = RetrofitClient.getClient(this).create(Users.class);
         //Create a file object using file path
         File file = new File(filePath);
-        // Create a request body with file and image media type
-        RequestBody fileReqBody = RequestBody.create(MediaType.parse("image/*"), file);
-        // Create MultipartBody.Part using file request-body,file name and part name
-        MultipartBody.Part part = MultipartBody.Part.createFormData("upload", file.getName(), fileReqBody);
-        //Create request body with text description and text media type
-        RequestBody description = RequestBody.create(MediaType.parse("text/plain"), "image-type");
-        //
-        Call<BaseResponse> call = api.editProfilePictureDetails(mUserId, part);
-        call.enqueue(new Callback<BaseResponse>() {
-            @Override
-            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
-                if (response.body() != null)
-                {
-                    if (response.body().getIsSuccess())
-                    {
-                        Toast.makeText(EditActivity.this, R.string.upload, Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                        Toast.makeText(EditActivity.this, response.body().getErrorMessage() , Toast.LENGTH_SHORT).show();
-                }
-                pd.dismiss();
-            }
 
-            @Override
-            public void onFailure(Call<BaseResponse> call, Throwable t) {
-                Toast.makeText(EditActivity.this, t.getMessage() , Toast.LENGTH_SHORT).show();
-                pd.dismiss();
-            }
-        });
+        AndroidNetworking.upload("http://yaken.cloudapp.net/Ta3llam/Api/User/EditProfilePictureDetails")
+                .addQueryParameter("UserID", mUserId)
+                .addHeaders("UserID", mUserId)
+                .addHeaders("Token", mUserId)
+                .addMultipartFile("image", file)
+                .addMultipartParameter("key", "value")
+                .setTag("uploadTest")
+                .setPriority(Priority.HIGH)
+                .build()
+                .setUploadProgressListener(new UploadProgressListener() {
+                    @Override
+                    public void onProgress(long bytesUploaded, long totalBytes) {
+                        Log.i("LOLOLOL", bytesUploaded + "");
+                        // do anything with progress
+                    }
+                })
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        pd.dismiss();
+                        Log.i("LOLOLOL", response.toString());
+                        // do anything with response
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        pd.dismiss();
+                        Log.i("LOLOLOL", error.toString());
+                        // handle error
+                    }
+                });
     }
 
     @Override
@@ -175,25 +216,6 @@ public class EditActivity extends AppCompatActivity {
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             mProfilePic.setImageBitmap(imageBitmap);
         }
-
-
-
-        // TODO : edit profile pic
-
-//        Users api = RetrofitClient.getClient(EditActivity.this).create(Users.class);
-//        Call<BaseResponse> call = api.editProfilePictureDetails("0e98041e-95ab-4a84-8d5d-ad0abb71a11e", "0e98041e-95ab-4a84-8d5d-ad0abb71a11e");
-//        call.enqueue(new Callback<BaseResponse>() {
-//            @Override
-//            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<BaseResponse> call, Throwable t) {
-//
-//            }
-//        });
-
     }
 
     @Override
@@ -207,19 +229,25 @@ public class EditActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.edit_menu: {
-                if ((!TextUtils.isEmpty(mEditName.getText().toString())) || !(TextUtils.isEmpty(mEditAbout.getText().toString()))) {
+                if ((TextUtils.isEmpty(mEditAbout.getText().toString()) && (TextUtils.isEmpty(mEditName.getText().toString())))) {
+                    return false;
+                }
+                if ((!TextUtils.isEmpty(mEditName.getText().toString()))) {
+                    user_name = mEditName.getText().toString();
+                }
+                if (!(TextUtils.isEmpty(mEditAbout.getText().toString()))) {
+                    about = mEditAbout.getText().toString();
+                }
+                if (!(TextUtils.isEmpty(mEditAbout.getText().toString()) || !(TextUtils.isEmpty(mEditAbout.getText().toString())))) {
                     Users api = RetrofitClient.getClient(EditActivity.this).create(Users.class);
                     Call<BaseResponse> call = api.editProfileDetails(mUserId, mEditName.getText().toString(), mEditAbout.getText().toString());
                     call.enqueue(new Callback<BaseResponse>() {
                         @Override
                         public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
-                            if (response.body() != null)
-                            {
-                                if (response.body().getIsSuccess())
-                                {
+                            if (response.body() != null) {
+                                if (response.body().getIsSuccess()) {
                                     Toast.makeText(EditActivity.this, "Your profile has been updated", Toast.LENGTH_SHORT).show();
-                                }
-                                else
+                                } else
                                     Toast.makeText(EditActivity.this, "Updating you profile has failed ,Please try again", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -229,6 +257,7 @@ public class EditActivity extends AppCompatActivity {
 
                         }
                     });
+
 
                 }
                 Intent mEditIntent = new Intent(EditActivity.this, MainActivity.class);

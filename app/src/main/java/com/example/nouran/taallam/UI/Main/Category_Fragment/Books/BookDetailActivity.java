@@ -14,17 +14,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nouran.taallam.Books;
+import com.example.nouran.taallam.Date;
 import com.example.nouran.taallam.Model.BookData;
 import com.example.nouran.taallam.Model.BookFollow;
 import com.example.nouran.taallam.R;
 import com.example.nouran.taallam.RetrofitClient;
 import com.squareup.picasso.Picasso;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -94,7 +91,6 @@ public class BookDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 unFollow(mUserId, bookId);
-
             }
         });
 
@@ -122,6 +118,7 @@ public class BookDetailActivity extends AppCompatActivity {
     private void follow(String userId, int bookId) {
         Books api = RetrofitClient.getClient(BookDetailActivity.this).create(Books.class);
         Call<BookFollow> call = api.setBookFollower(userId, bookId);
+        Log.i("PPLLPPLLPP",userId+"    "+bookId);
         call.enqueue(new Callback<BookFollow>() {
             @Override
             public void onResponse(Call<BookFollow> call, Response<BookFollow> response) {
@@ -136,7 +133,7 @@ public class BookDetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<BookFollow> call, Throwable t) {
-
+                Toast.makeText(BookDetailActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -152,9 +149,13 @@ public class BookDetailActivity extends AppCompatActivity {
                     if (response.body().getIsSuccess()) {
                         mTeacherName.setText(response.body().getBookDetails().getTeacherName());
                         mBookDName.setText(response.body().getBookDetails().getName());
-                        mBookDLevel.setText(response.body().getBookDetails().getLevelNumber() + "");
-//                        mDurationTxt.setText(setDate(response.body().getBookDetails().getFromDate()) + " - " +
-//                                setDate(response.body().getBookDetails().getToDate()));
+                        mBookDLevel.setText("Levels :" + response.body().getBookDetails().getLevelNumber());
+
+                        if (response.body().getBookDetails().getFromDate() != null) {
+                            String duration = Date.format2Date(response.body().getBookDetails().getFromDate()) + "   -   " +
+                                    Date.format2Date(response.body().getBookDetails().getToDate());
+                            mDurationTxt.setText(duration);
+                        }
 
                         if (response.body().getBookDetails().getParticipantsNumber() == 1)
                             mParticipantsTxt.setText(response.body().getBookDetails().getParticipantsNumber() + " Participant");
@@ -188,19 +189,6 @@ public class BookDetailActivity extends AppCompatActivity {
         });
     }
 
-    private String setDate(String Date) {
-//        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
-        Date date = null;//You will get date object relative to server/client timezone wherever it is parsed
-        try {
-            date = dateFormat.parse(Date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH); //If you need time just put specific format for time like 'HH:mm:ss'
-        String dateStr = formatter.format(date);
-        return dateStr;
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

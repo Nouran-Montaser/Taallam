@@ -3,7 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.Main.SearchActivity">
+    tools:context=".UI.Main.SearchActivity"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/empty_search"
+        android:text="@string/no_users_found"
+        android:textAlignment="center"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/_13sdp"
+        android:visibility="gone"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/search_recyclerView"

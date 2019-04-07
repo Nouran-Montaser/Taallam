@@ -1,5 +1,6 @@
 package com.example.nouran.taallam.UI.Register;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ParseException;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.nouran.taallam.UI.ForgetPassword.ForgetPassword2Activity;
 import com.example.nouran.taallam.Users;
 import com.example.nouran.taallam.Model.Register;
 import com.example.nouran.taallam.R;
@@ -33,6 +35,8 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText mRegisterPass;
     private String mUserName, mPassword, mConfirmedpass, mFacebookID, mEmail;
     private EditText mConfirmedRegisterPass;
+    private ProgressDialog mRegProgress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,8 @@ public class RegisterActivity extends AppCompatActivity {
         mRegisterPass = findViewById(R.id.register_pass);
         Button mRegisterButton = findViewById(R.id.register_button);
         mConfirmedRegisterPass = findViewById(R.id.confirmed_register_pass);
+
+        mRegProgress = new ProgressDialog(this);
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowCustomEnabled(true); // enable overriding the default toolbar layout
@@ -56,22 +62,45 @@ public class RegisterActivity extends AppCompatActivity {
                 mEmail = mRegisterMail.getText().toString();
                 mConfirmedpass = mConfirmedRegisterPass.getText().toString();
 
-                if (TextUtils.isEmpty(mRegisterName.getText().toString()))
+                if (TextUtils.isEmpty(mRegisterName.getText().toString())) {
                     mRegisterName.setError(getString(R.string.required));
-                if (TextUtils.isEmpty(mRegisterMail.getText().toString()))
+                    mRegisterName.requestFocus();
+                }
+                if (TextUtils.isEmpty(mRegisterMail.getText().toString())) {
                     mRegisterMail.setError(getString(R.string.required));
-                if (TextUtils.isEmpty(mRegisterPass.getText().toString()))
+                    mRegisterMail.requestFocus();
+                }
+                if (TextUtils.isEmpty(mRegisterPass.getText().toString())) {
                     mRegisterPass.setError(getString(R.string.required));
-                if (TextUtils.isEmpty(mConfirmedRegisterPass.getText().toString()))
+                    mRegisterPass.requestFocus();
+                }
+                if (TextUtils.isEmpty(mConfirmedRegisterPass.getText().toString())) {
                     mConfirmedRegisterPass.setError(getString(R.string.required));
-                else {
-                    boolean check = Patterns.EMAIL_ADDRESS.matcher(mRegisterMail.getText().toString()).matches();
-                    if (check) {
-                        getData(mEmail,mUserName,mPassword,mConfirmedpass);
+                    mConfirmedRegisterPass.requestFocus();
+                } if (mPassword.length() < 6)
+                {
+                    mConfirmedRegisterPass.setError(getString(R.string.too_small));
+                    mConfirmedRegisterPass.requestFocus();
+                }else {
+                    String mConfirmedPass = mRegisterPass.getText().toString(), mPassword = mConfirmedRegisterPass.getText().toString();
+                    if (!mConfirmedPass.equals(mPassword)) {
+                        mConfirmedRegisterPass.setError(getString(R.string.not_matched));
+                        mRegisterPass.setError(getString(R.string.not_matched));
+                        mRegisterPass.setFocusable(true);
+                        Toast.makeText(RegisterActivity.this, getString(R.string.not_matched), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(RegisterActivity.this, R.string.not_valid_mail_msg, Toast.LENGTH_SHORT).show();
-                    }
+                        boolean check = Patterns.EMAIL_ADDRESS.matcher(mRegisterMail.getText().toString()).matches();
+                        if (check) {
+                            mRegProgress.setTitle("Register ");
+                            mRegProgress.setMessage("Please wait while we check your credentials!");
+                            mRegProgress.setCanceledOnTouchOutside(false);//prevenr user from touch on screen
+                            mRegProgress.show();
+                            getData(mEmail, mUserName, mPassword, mConfirmedpass);
+                        } else {
+                            Toast.makeText(RegisterActivity.this, R.string.not_valid_mail_msg, Toast.LENGTH_SHORT).show();
+                        }
 
+                    }
                 }
             }
         });
@@ -79,7 +108,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void getData(String mEmail,String mUserName,String mPassword,String mConfirmedpass) {
+    private void getData(String mEmail, String mUserName, String mPassword, String mConfirmedpass) {
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -92,28 +121,31 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Register> call, Response<Register> response) {
                 try {
-                    if (response.body().getIsSuccess())
-                    {
+                    mRegProgress.dismiss();
+                    if (response.body().getIsSuccess()) {
                         Intent mWellcomeIntent = new Intent(RegisterActivity.this, WellcomeActivity.class);
                         startActivity(mWellcomeIntent);
-
+                        finish();
                         SharedPreferences.Editor sharedPrefsEditor;
                         final String MY_PREFS_NAME = "MyPrefsFile";
                         sharedPrefsEditor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                         sharedPrefsEditor.putString("UserID", response.body().getUserID());
                         sharedPrefsEditor.apply();
 
-                        Log.i("LLLL",response.body().getUserID());
-                    }
-                    else
-                        Log.i("LLLL",response.body().getErrorMessage());
-                } catch (ParseException e) {
+                        Log.i("LLLL", response.body().getUserID());
+                    } else
+                    {
+                        Toast.makeText(RegisterActivity.this, response.body().getErrorMessage(), Toast.LENGTH_SHORT).show();
+                        Log.i("LLLL", response.body().getErrorMessage());
+                } }catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
 
             @Override
             public void onFailure(Call<Register> call, Throwable t) {
+                mRegProgress.dismiss();
+
             }
         });
     }

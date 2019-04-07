@@ -3,6 +3,7 @@ package com.example.nouran.taallam.UI.Main;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,6 +20,7 @@ import android.view.MenuItem;
 import com.example.nouran.taallam.Model.SearchUsers;
 import com.example.nouran.taallam.Model.User;
 import com.example.nouran.taallam.RetrofitClient;
+import com.example.nouran.taallam.UI.Login.LoginActivity;
 import com.example.nouran.taallam.UI.Main.Category_Fragment.CategoryFragment;
 import com.example.nouran.taallam.UI.Main.Main_Fragment.MainFragment;
 import com.example.nouran.taallam.UI.Main.Notification_Fragment.NotificationFragment;
@@ -36,6 +38,8 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     Toolbar toolbar;
+    private static SharedPreferences sharedPrefs;
+    private final String MY_PREFS_NAME = "MyPrefsFile";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +93,9 @@ public class MainActivity extends AppCompatActivity {
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setQueryHint(getString(R.string.search_hint));
+        searchView.setIconifiedByDefault(true);
+        searchView.setSubmitButtonEnabled (true);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
