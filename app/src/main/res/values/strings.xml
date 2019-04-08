@@ -40,10 +40,11 @@
     <string name="sort_by">sort by</string>
     <string name="logo_image">logo image</string>
     <string name="about_book">About Book</string>
-    <string name="teacher">Teacher</string>
-    <string name="participants">Participants</string>
+    <string name="teacher"> Teacher</string>
+    <string name="teachers"> Teachers</string>
+    <string name="participants"> Participants</string>
     <string name="duration">Duration</string>
-    <string name="followers">Followers</string>
+    <string name="followers"> Followers</string>
     <string name="chat">Chat</string>
     <string name="read_book">Read Book</string>
     <string name="book_interactions">Book Interactions</string>
@@ -52,7 +53,7 @@
     <string name="logout">Logout</string>
     <string name="name">Name… </string>
     <string name="edit">Edit</string>
-    <string name="levels">Levels</string>
+    <string name="levels">Levels : </string>
     <string name="number_of_subscribers">Number of subscribers</string>
     <string name="unsubscribe">unsubscribe</string>
 
@@ -66,7 +67,6 @@
     <string name="studying_now">Studying now</string>
     <string name="send_btn">Send</string>
     <string name="required">Required</string>
-    <string name="register">Register</string>
     <string name="book_detail">BookDetail</string>
     <string name="follow_msg">You are now have a new friend</string>
     <string name="unfollow">UnFollow</string>
@@ -81,5 +81,18 @@
     <string name="search_for_user">Search for User</string>
     <string name="sort_by_subscribes">Sort by subscribes</string>
     <string name="empty">Empty</string>
+    <string name="prograss_msg">Please wait while we check your credentials!</string>
+    <string name="logging_in">Logging In</string>
+    <string name="register">Register</string>
+    <string name="unfollow_msg">You now have unfollowed</string>
+    <string name="update_msg">Your profile has been updated</string>
+    <string name="update_error_msg">Updating your profile has failed ,Please try again</string>
+    <string name="welcome_msg">You must choose course</string>
+    <string name="question">Question</string>
+    <string name="questions">Questions</string>
+    <string name="student">Student</string>
+    <string name="students">Students</string>
+    <string name="level">Level</string>
+    <string name="wellcome2_msg">You must choose at least one book</string>
 
 </resources>

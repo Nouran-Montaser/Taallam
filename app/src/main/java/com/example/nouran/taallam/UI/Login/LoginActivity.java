@@ -166,8 +166,8 @@ public class LoginActivity extends Activity {
                 } else {
                     boolean check = android.util.Patterns.EMAIL_ADDRESS.matcher(mLoginMail.getText().toString()).matches();
                     if (check) {
-                        mLogInProgress.setTitle("Logging In");
-                        mLogInProgress.setMessage("Please wait while we check your credentials!");
+                        mLogInProgress.setTitle(getString(R.string.logging_in));
+                        mLogInProgress.setMessage(getString(R.string.prograss_msg));
                         mLogInProgress.setCanceledOnTouchOutside(false);//prevenr user from touch on screen
                         mLogInProgress.show();
                         signIn(mLoginMail.getText().toString(), mLoginPass.getText().toString());
@@ -199,13 +199,18 @@ public class LoginActivity extends Activity {
 
     }
 
+//    private  void firsttime()
+//    {
+//
+//    }
+
     private void signIn(String mail, String pass) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://yaken.cloudapp.net/Ta3llam/Api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         Users api = retrofit.create(Users.class);
-        Call<Login> call = api.login(mail, pass, "0000", "", false);
+        Call<Login> call = api.login(mail, pass, "123456789", "", false);
         call.enqueue(new Callback<Login>() {
             @Override
             public void onResponse(Call<Login> call, Response<Login> response) {
@@ -213,11 +218,9 @@ public class LoginActivity extends Activity {
                     if (response.body().getIsSuccess()) {
                         mLogInProgress.dismiss();
                         if (response.body().getIsFirstTime()) {
-                            Intent wellcomeIntent = new Intent(LoginActivity.this , WellcomeActivity.class);
+                            Intent wellcomeIntent = new Intent(LoginActivity.this, WellcomeActivity.class);
                             startActivity(wellcomeIntent);
-                        }
-                        else
-                        {
+                        } else {
                             Intent mainactivityIntent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(mainactivityIntent);
                             finish();
@@ -226,6 +229,7 @@ public class LoginActivity extends Activity {
                         SharedPreferences.Editor sharedPrefsEditor;
                         sharedPrefsEditor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                         sharedPrefsEditor.putString("UserID", response.body().getUserID());
+                        sharedPrefsEditor.putBoolean("IsFirstTime", false);
                         sharedPrefsEditor.apply();
 
                         Log.i("LLLL", response.body().getUserID());
@@ -258,14 +262,31 @@ public class LoginActivity extends Activity {
     }
 
     private void checkLogIn() {
+
+
         sharedPrefs = getApplicationContext().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         String user_id_pref = sharedPrefs.getString("UserID", null);
 
         if (user_id_pref != null) {
-            Intent StartIntent = new Intent(LoginActivity.this, MainActivity.class);
-            StartIntent.putExtra("UserID", user_id_pref);
-            startActivity(StartIntent);
-            finish();
+
+            Log.i("FAILUER :", user_id_pref);
+            sharedPrefs = getApplicationContext().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+            boolean firstTime = sharedPrefs.getBoolean("IsFirstTime", true);
+
+            if (firstTime) {
+                Log.i("FAILUER :", firstTime+"");
+
+                Intent StartIntent = new Intent(LoginActivity.this, WellcomeActivity.class);
+                StartIntent.putExtra("IsFirstTime", firstTime);
+                startActivity(StartIntent);
+                finish();
+            } else {
+                Log.i("FAILUER :", firstTime+"HERE");
+                Intent StartIntent = new Intent(LoginActivity.this, MainActivity.class);
+                StartIntent.putExtra("UserID", user_id_pref);
+                startActivity(StartIntent);
+                finish();
+            }
         }
     }
 

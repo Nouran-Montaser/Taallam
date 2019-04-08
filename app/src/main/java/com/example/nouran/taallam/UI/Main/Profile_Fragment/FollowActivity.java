@@ -81,6 +81,16 @@ public class FollowActivity extends AppCompatActivity {
         }
         getAlldetails(userid, mUserId);
 
+        mNewsFeedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newsFeedIntent = new Intent(FollowActivity.this , NewsFeedActivity.class);
+                newsFeedIntent.putExtra("followerObj",userid);
+                startActivity(newsFeedIntent);
+
+            }
+        });
+
         mMsgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,7 +117,7 @@ public class FollowActivity extends AppCompatActivity {
                                     Toast.makeText(FollowActivity.this, response.body().getErrorMessage(), Toast.LENGTH_SHORT).show();
                                 } else {
                                     Toast.makeText(FollowActivity.this, R.string.follow_msg, Toast.LENGTH_SHORT).show();
-                                    mFollowBtn.setText("UnFollow");
+                                    mFollowBtn.setText(getString(R.string.unfollow));
                                 }
                             }
                         }
@@ -128,7 +138,7 @@ public class FollowActivity extends AppCompatActivity {
                                     Toast.makeText(FollowActivity.this, response.body().getErrorMessage(), Toast.LENGTH_SHORT).show();
                                 } else {
                                     Toast.makeText(FollowActivity.this, "UnFollow", Toast.LENGTH_SHORT).show();
-                                    mFollowBtn.setText("Follow");
+                                    mFollowBtn.setText(getString(R.string.follow));
                                 }
                             }
                         }
@@ -246,4 +256,6 @@ public class FollowActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

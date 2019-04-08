@@ -246,9 +246,9 @@ public class EditActivity extends AppCompatActivity {
                         public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
                             if (response.body() != null) {
                                 if (response.body().getIsSuccess()) {
-                                    Toast.makeText(EditActivity.this, "Your profile has been updated", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(EditActivity.this, R.string.update_msg, Toast.LENGTH_SHORT).show();
                                 } else
-                                    Toast.makeText(EditActivity.this, "Updating you profile has failed ,Please try again", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(EditActivity.this, R.string.update_error_msg, Toast.LENGTH_SHORT).show();
                             }
                         }
 

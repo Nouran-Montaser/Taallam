@@ -1,6 +1,7 @@
 package com.example.nouran.taallam;
 
 import com.example.nouran.taallam.Model.BaseResponse;
+import com.example.nouran.taallam.Model.NotificationResponse;
 import com.example.nouran.taallam.Model.UserNotifications;
 
 import retrofit2.Call;
@@ -18,4 +19,7 @@ public interface Notifications {
     @POST("Notifications/UserUpdateSeenNotification")
     public Call<BaseResponse> updateSeenNotification(@Field("UserID") String UserID , @Field("NotificationID") int NotificationID);
 
+    @FormUrlEncoded
+    @POST("Notifications/GetNoitificationNumber")
+    public Call<NotificationResponse> getNoitificationNumber(@Field("UserID") String UserID);
 }

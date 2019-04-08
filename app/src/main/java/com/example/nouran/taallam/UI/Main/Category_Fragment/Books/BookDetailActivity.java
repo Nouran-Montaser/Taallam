@@ -103,7 +103,7 @@ public class BookDetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<BookFollow> call, Response<BookFollow> response) {
                 if (response.body().getIsSuccess()) {
-                    Toast.makeText(BookDetailActivity.this, "You now have unfollowed " + bookName, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BookDetailActivity.this, getString(R.string.unfollow_msg) + bookName, Toast.LENGTH_SHORT).show();
                 } else
                     Toast.makeText(BookDetailActivity.this, response.body().getErrorMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -125,7 +125,7 @@ public class BookDetailActivity extends AppCompatActivity {
                 Log.i("FOLLOWWW", response.body() + "");
                 if (response.body() != null) {
                     if (response.body().getIsSuccess()) {
-                        Toast.makeText(BookDetailActivity.this, "You are now following " + bookName, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BookDetailActivity.this, getString(R.string.follow_msg) + bookName, Toast.LENGTH_SHORT).show();
                     } else
                         Toast.makeText(BookDetailActivity.this, response.body().getErrorMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -149,7 +149,7 @@ public class BookDetailActivity extends AppCompatActivity {
                     if (response.body().getIsSuccess()) {
                         mTeacherName.setText(response.body().getBookDetails().getTeacherName());
                         mBookDName.setText(response.body().getBookDetails().getName());
-                        mBookDLevel.setText("Levels :" + response.body().getBookDetails().getLevelNumber());
+                        mBookDLevel.setText(getString(R.string.levels) + response.body().getBookDetails().getLevelNumber());
 
                         if (response.body().getBookDetails().getFromDate() != null) {
                             String duration = Date.format2Date(response.body().getBookDetails().getFromDate()) + "   -   " +
@@ -158,14 +158,14 @@ public class BookDetailActivity extends AppCompatActivity {
                         }
 
                         if (response.body().getBookDetails().getParticipantsNumber() == 1)
-                            mParticipantsTxt.setText(response.body().getBookDetails().getParticipantsNumber() + " Participant");
+                            mParticipantsTxt.setText(response.body().getBookDetails().getParticipantsNumber() + getString(R.string.participants));
                         else
-                            mParticipantsTxt.setText(response.body().getBookDetails().getParticipantsNumber() + " Participants");
+                            mParticipantsTxt.setText(response.body().getBookDetails().getParticipantsNumber() + getString(R.string.participants));
 
                         if (response.body().getBookDetails().getFollowersNumber() == 1)
-                            mFollowerTxt.setText(response.body().getBookDetails().getFollowersNumber() + " Follower");
+                            mFollowerTxt.setText(response.body().getBookDetails().getFollowersNumber() + getString(R.string.followers));
                         else
-                            mFollowerTxt.setText(response.body().getBookDetails().getFollowersNumber() + " Followers");
+                            mFollowerTxt.setText(response.body().getBookDetails().getFollowersNumber() + getString(R.string.followers));
 
                         mAboutBookTxt.setText(response.body().getBookDetails().getAbout());
 

@@ -69,29 +69,31 @@ public class NotificationFragment extends Fragment {
             public void onResponse(Call<UserNotifications> call, Response<UserNotifications> response) {
                 if (response.body() != null) {
                     if (response.body().getIsSuccess()) {
-                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-                        mNotificationsRecyclerView.setHasFixedSize(true);
-                        mNotificationsRecyclerView.setLayoutManager(linearLayoutManager);
-
-                        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mNotificationsRecyclerView.getContext(),
-                                linearLayoutManager.getOrientation());
-                        mNotificationsRecyclerView.addItemDecoration(dividerItemDecoration);
-                        mNotificationsRecyclerView.setAdapter(new NotificationAdapter(getActivity(), response.body().getAllNotificaions()));
-
                         if (response.body().getAllNotificaions().length == 0) {
                             mNotificationsEmptycontainer.setVisibility(View.VISIBLE);
                             mNotificationsRecyclerView.setVisibility(View.GONE);
                         } else {
                             mNotificationsEmptycontainer.setVisibility(View.GONE);
                             mNotificationsRecyclerView.setVisibility(View.VISIBLE);
+                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+                            mNotificationsRecyclerView.setHasFixedSize(true);
+                            mNotificationsRecyclerView.setLayoutManager(linearLayoutManager);
+
+                            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mNotificationsRecyclerView.getContext(),
+                                    linearLayoutManager.getOrientation());
+                            mNotificationsRecyclerView.addItemDecoration(dividerItemDecoration);
+                            mNotificationsRecyclerView.setAdapter(new NotificationAdapter(getActivity(), response.body().getAllNotificaions()));
                             for (int i = 0; i < response.body().getAllNotificaions().length; i++) {
+                                Log.i("NOTINOTI",response.body().getAllNotificaions().length + "     " + response.body().getAllNotificaions()[i].getIsSeen());
                                 if (!response.body().getAllNotificaions()[i].getIsSeen()) {
+                                    Log.i("NOTINOTI",response.body().getAllNotificaions().length + "     "+ "HERE  " );
                                     Notifications api2 = RetrofitClient.getClient(getActivity()).create(Notifications.class);
                                     Call<BaseResponse> call2 = api2.updateSeenNotification(mUserId,
                                             response.body().getAllNotificaions()[i].getID());
                                     call2.enqueue(new Callback<BaseResponse>() {
                                         @Override
                                         public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                                            Log.i("NOTINOTI",response.body().getErrorMessage() + "     "+ "HERE  ");
                                             if (response.body() != null) {
                                                 if (response.body().getIsSuccess()) {
                                                     Log.i("Success", response.body().getIsSuccess() + "");
@@ -102,7 +104,7 @@ public class NotificationFragment extends Fragment {
 
                                         @Override
                                         public void onFailure(Call<BaseResponse> call, Throwable t) {
-
+                                            Log.i("NOTINOTI",t.getMessage() );
                                         }
                                     });
                                 }

@@ -12,168 +12,175 @@
         android:layout_height="wrap_content">
 
 
-            <TextView
-                android:layout_alignParentEnd="true"
-                android:id="@+id/follow_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed"
-                android:text="hjghgjhgjj"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_15ssp"
-                android:layout_marginTop="@dimen/_9sdp"
-                android:layout_marginEnd="@dimen/_20sdp" />
+        <TextView
+            android:id="@+id/follow_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_9sdp"
+            android:fontFamily="sans-serif-condensed"
+            android:text="hjghgjhgjj"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_15ssp" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_alignParentEnd="true"
-                android:id="@+id/follow_pic"
-                android:layout_width="@dimen/_75sdp"
-                android:layout_height="@dimen/_75sdp"
-                android:layout_marginTop="@dimen/_35sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:src="@drawable/pp" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/follow_pic"
+            android:layout_width="@dimen/_75sdp"
+            android:layout_height="@dimen/_75sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_35sdp"
+            android:src="@drawable/pp" />
 
 
-            <Button
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="@dimen/_10sdp"
-                style="?android:attr/buttonBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_45sdp"
-                android:background="@drawable/follow_btn"
-                android:shadowColor="@android:color/transparent"
-                android:text="@string/message"
-                android:textColor="#fff"
-                android:layout_marginEnd="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_30sdp"
-                android:id="@+id/msg_btn"/>
+        <Button
+            android:id="@+id/msg_btn"
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:background="@drawable/follow_btn"
+            android:shadowColor="@android:color/transparent"
+            android:text="@string/message"
+            android:textColor="#fff" />
 
-            <Button
-                android:layout_toRightOf="@+id/msg_btn"
-                style="?android:attr/buttonBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_45sdp"
-                android:layout_marginBottom="@dimen/_3sdp"
-                android:layout_marginEnd="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_30sdp"
-                android:background="@drawable/follow_btn"
-                android:shadowColor="@android:color/transparent"
-                android:text="@string/unfollow"
-                android:textColor="#fff"
-                android:id="@+id/follow_btn"/>
-
+        <Button
+            android:id="@+id/follow_btn"
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_marginBottom="@dimen/_3sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_toRightOf="@+id/msg_btn"
+            android:background="@drawable/follow_btn"
+            android:shadowColor="@android:color/transparent"
+            android:text="@string/unfollow"
+            android:textColor="#fff" />
 
 
     </RelativeLayout>
 
-
-    <TextView
-        android:id="@+id/study_now_lable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_14sdp"
-        android:layout_marginStart="@dimen/_7sdp"
-        android:fontFamily="sans-serif-condensed"
-        android:text="@string/studying_now"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/_15ssp"
-        android:textStyle="bold" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/study_recyclerView"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_7sdp" />
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/fno_books_txt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/empty"
-        android:visibility="gone"
-        android:textAlignment="center"
-        android:textSize="@dimen/_12sdp"
-        android:textStyle="bold"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/fabout_lable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_7sdp"
-        android:layout_marginTop="@dimen/_7sdp"
-        android:fontFamily="sans-serif-condensed"
-        android:text="@string/about"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/_15ssp"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/study_now_lable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_14sdp"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/studying_now"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_15ssp"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/fabout_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_7sdp"
-        android:layout_marginTop="@dimen/_7sdp"
-        android:fontFamily="sans-serif-condensed"
-        android:text="test about book test test test test test test test"
-        android:textColor="@color/dark_gray"
-        android:textSize="@dimen/_15ssp" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/study_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_7sdp" />
 
-    <TextView
-        android:id="@+id/fno_about_txt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/empty"
-        android:visibility="gone"
-        android:textAlignment="center"
-        android:textSize="@dimen/_12sdp"
-        android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/fno_books_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/empty"
+                android:textAlignment="center"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold"
+                android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/Ffollowers_lable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_7sdp"
-        android:layout_marginTop="@dimen/_7sdp"
-        android:fontFamily="sans-serif-condensed"
-        android:text="@string/followers"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/_15ssp"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/fabout_lable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/about"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_15ssp"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/Ffollowers_Ptxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_7sdp"
-        android:layout_marginTop="@dimen/_7sdp"
-        android:fontFamily="sans-serif-condensed"
-        android:text="0 Follower"
-        android:textColor="@color/dark_gray"
-        android:textSize="@dimen/_15ssp"
-        android:visibility="gone" />
+            <TextView
+                android:id="@+id/fabout_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="test about book test test test test test test test"
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/_15ssp" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/Ffollowers_recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_7sdp" />
+            <TextView
+                android:id="@+id/fno_about_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/empty"
+                android:textAlignment="center"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/Ffollowers_lable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/followers"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_15ssp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/Ffollowers_Ptxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="0 Follower"
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/_15ssp"
+                android:visibility="gone" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/Ffollowers_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_7sdp" />
 
 
-    <Button
-        android:id="@+id/newsFeed_button"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:background="@drawable/loginbtn"
-        android:padding="@dimen/_15sdp"
-        android:shadowColor="@android:color/transparent"
-        android:text="@string/news_feed"
-        android:textColor="#fff"
-        android:textSize="@dimen/_15ssp"
-        android:textStyle="bold" />
-
-
+            <Button
+                android:id="@+id/newsFeed_button"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@drawable/loginbtn"
+                android:padding="@dimen/_15sdp"
+                android:shadowColor="@android:color/transparent"
+                android:text="@string/news_feed"
+                android:textColor="#fff"
+                android:textSize="@dimen/_15ssp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

@@ -56,8 +56,8 @@ public class Wellcome2Activity extends AppCompatActivity {
         courseID = getIntent().getIntExtra("SelectedCourse", 0);
         sharedPrefs = this.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         userId = sharedPrefs.getString("UserID", null);
-        Log.i("OOPP",userId);
-        Log.i("OOPP",courseID+"");
+        Log.i("OOPP", userId);
+        Log.i("OOPP", courseID + "");
 
         getBooks(courseID);
 
@@ -82,11 +82,21 @@ public class Wellcome2Activity extends AppCompatActivity {
         mFinishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mMaimIntent = new Intent(Wellcome2Activity.this, MainActivity.class);
                 booksLists = wellcomeAdapter.getBooks();
-                setUserBook(userId,booksLists);
-                startActivity(mMaimIntent);
-                finish();
+                if (booksLists == null || booksLists.size() == 0) {
+                    Toast.makeText(Wellcome2Activity.this, R.string.wellcome2_msg, Toast.LENGTH_SHORT).show();
+                } else {
+
+                    SharedPreferences.Editor sharedPrefsEditor;
+                    sharedPrefsEditor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                    sharedPrefsEditor.putBoolean("IsFirstTime", false);
+                    sharedPrefsEditor.apply();
+
+                    Intent mMaimIntent = new Intent(Wellcome2Activity.this, MainActivity.class);
+                    setUserBook(userId, booksLists);
+                    startActivity(mMaimIntent);
+                    finish();
+                }
             }
         });
     }
@@ -111,7 +121,7 @@ public class Wellcome2Activity extends AppCompatActivity {
                         mRecyclerView.addItemDecoration(dividerItemDecoration);
                         ArrayList<BooksList> books = new ArrayList<>(Arrays.asList(response.body().getBooksList()));
                         wellcomeAdapter = new Wellcome2Adapter(Wellcome2Activity.this, books,
-                                null,"welcome");
+                                null, "welcome");
 
                         mRecyclerView.setAdapter(wellcomeAdapter);
                     }
@@ -129,16 +139,17 @@ public class Wellcome2Activity extends AppCompatActivity {
     private void setUserBook(String userId, ArrayList<BooksList> list) {
         Books api = RetrofitClient.getClient(Wellcome2Activity.this).create(Books.class);
         ArrayList<Integer> list1 = new ArrayList<>();
-        for (int i=0;i<list.size();i++){
-            Toast.makeText(this, list.get(i)+"", Toast.LENGTH_SHORT).show();
-            list1.add(list.get(i).getID());}
-        UserBook userBook = new UserBook("020bd359-65f1-4c87-9b4b-6e4b495a79bb",list1);
+        for (int i = 0; i < list.size(); i++) {
+            Toast.makeText(this, list.get(i) + "", Toast.LENGTH_SHORT).show();
+            list1.add(list.get(i).getID());
+        }
+        UserBook userBook = new UserBook("020bd359-65f1-4c87-9b4b-6e4b495a79bb", list1);
         Call<BaseResponse> call = api.setUserBooks(userBook);
         call.enqueue(new Callback<BaseResponse>() {
             @Override
             public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
                 if (response.body() != null) {
-                    Log.i("OOPP",userId +"      "+response.body().getIsSuccess()+"");
+                    Log.i("OOPP", userId + "      " + response.body().getIsSuccess() + "");
                     if (!response.body().getIsSuccess()) {
                         Toast.makeText(Wellcome2Activity.this, response.body().getErrorMessage(), Toast.LENGTH_SHORT).show();
                     } else

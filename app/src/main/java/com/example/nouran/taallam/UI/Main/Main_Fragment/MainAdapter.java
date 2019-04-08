@@ -53,13 +53,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.myHolder> {
             holder.mMainDate.setText(Date.format2Date(homePosts[position].getDatetime()));
         }else
             holder.mMainDate.setText(Date.formatDate(homePosts[position].getDatetime()));
-//        if ((homePosts[position].getDatetime()) != null) {
-//        if (Date.formatDate(homePosts[position].getDatetime()) != null) {
-//                holder.mMainDate.setText(Date.formatDate(homePosts[position].getDatetime()));
-//            } else
-//                holder.mMainDate.setText(Date.format3Date(homePosts[position].getDatetime()));
-//        }
-
 
         holder.mMainTxt2.setText(homePosts[position].getBody());
         holder.mMainComments.setOnClickListener(new View.OnClickListener() {

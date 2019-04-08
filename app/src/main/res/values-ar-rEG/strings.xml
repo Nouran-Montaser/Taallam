@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">تعلم</string>
     <string name="backgroundimg">صورة الخليفة</string>
     <string name="email">بريد الكتروني</string>
@@ -26,14 +27,12 @@
     <string name="notifications">اللاشعارات</string>
     <string name="profile">شخصي</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search">ابحث هنا</string>
     <string name="messages">الرسائل</string>
-    <string name="search_hint">Search Hint</string>
+    <string name="search_hint">بحث عن شخص</string>
     <string name="no_data">لا يوجود معلومات</string>
-    <string name="add_message">اضف</string>
-    <string name="add_comment">اضف</string>
+    <string name="add_message">اضف رسالة</string>
+    <string name="add_comment">اضف تعليق</string>
     <string name="add">اضف</string>
     <string name="arrange">ترتيب</string>
     <string name="sort">ترتيب</string>
@@ -41,7 +40,8 @@
     <string name="sort_by">ترتيب ع حسب</string>
     <string name="logo_image">صوره اللوجو</string>
     <string name="about_book">عن الكتاب</string>
-    <string name="teacher">المعم</string>
+    <string name="teacher"> المعلم </string>
+    <string name="teachers"> المعلمين </string>
     <string name="participants">المشاركين</string>
     <string name="duration">المدة</string>
     <string name="followers">المتابعين</string>
@@ -53,7 +53,8 @@
     <string name="logout">تسجيل الخروج</string>
     <string name="name">الاسم..</string>
     <string name="edit">تعديل</string>
-    <string name="levels">المستوايات</string>
+    <string name="levels">المستوايات :</string>
+    <string name="level">المستوي :</string>
     <string name="number_of_subscribers">عدد المتابعين</string>
     <string name="follow">متابعة</string>
     <string name="unsubscribe">الغاء الاشتراك</string>
@@ -61,4 +62,40 @@
     <string name="facebook_app_id">314108769291424</string>
     <string name="fb_login_protocol_scheme">fb314108769291424</string>
     <string name="arabic">عربي</string>
+
+    <string name="edit_icon">ايقونة التعديل</string>
+    <string name="logo">شعار</string>
+    <string name="message">رسالة</string>
+    <string name="news_feed">أخر الاخبار</string>
+    <string name="studying_now">يتعلم الان</string>
+    <string name="send_btn">ارسال</string>
+    <string name="required">مطلوب </string>
+    <string name="book_detail">تفاصيل الكتاب</string>
+    <string name="follow_msg">انت الان لديك صديق جديد</string>
+    <string name="unfollow">الغاء المتابعة</string>
+    <string name="upload">تم التحميل</string>
+    <string name="too_small">صغير جدا</string>
+    <string name="login_msg">البريد او كلمو المرور خاطئة</string>
+    <string name="no_followers">لا متابعين</string>
+    <string name="no_users_found">لم يتم ايجاد اشخاص</string>
+    <string name="search_title">يحث</string>
+    <string name="interactions">تفاعلات</string>
+    <string name="search_for_user">البحث عن شخص</string>
+    <string name="sort_by_subscribes">الترتيب بالمتابعيين</string>
+    <string name="empty">فارغ</string>
+    <string name="prograss_msg">يرجي الانتظار بينما يتم التحقق من البيانات</string>
+    <string name="logging_in">تسجيل الدخول..</string>
+    <string name="register">تسجيل الدخول</string>
+    <string name="unfollow_msg">لقد قمت بالغاء المتابعة</string>
+    <string name="update_msg">لقد تم تحديث الصفحة الشخصية</string>
+    <string name="update_error_msg">لقد فشل تحديث الصفحة الشخصية، حاول مرة اخري</string>
+    <string name="welcome_msg">يجب اخيار دورة</string>
+    <string name="question">سؤال</string>
+    <string name="questions">اسئلة</string>
+    <string name="student">طالب</string>
+    <string name="students">طلاب</string>
+    <string name="wellcome2_msg">يجب اخيار وواحد علي الاقل</string>
+
+
+
 </resources>

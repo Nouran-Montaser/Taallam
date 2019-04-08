@@ -104,11 +104,15 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Users api = RetrofitClient.getClient(getActivity()).create(Users.class);
-                Call<BaseResponse> call = api.logOut("0e98041e-95ab-4a84-8d5d-ad0abb71a11e", "0e98041e-95ab-4a84-8d5d-ad0abb71a11e");
+                Call<BaseResponse> call = api.logOut(mUserId,"123456789");
                 call.enqueue(new Callback<BaseResponse>() {
                     @Override
                     public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
                         if (response.body().getIsSuccess()) {
+                            SharedPreferences.Editor sharedPrefsEditor;
+                            sharedPrefsEditor = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                            sharedPrefsEditor.putString("UserID", null);
+                            sharedPrefsEditor.apply();
                             Intent logOutIntent = new Intent(getActivity(), LoginActivity.class);
                             startActivity(logOutIntent);
                             getActivity().finish();//when we are don't need to go back (no back button)
@@ -183,6 +187,13 @@ public class ProfileFragment extends Fragment {
                             mFollowersRecyclerView.setHasFixedSize(true);
                             mFollowersRecyclerView.setLayoutManager(mFollowersLayout);
                             Log.i("getFollowersListLen", response.body().getSixFollowers().length + "");
+                            for (int i =0 ; i < response.body().getSixFollowers().length ; i++)
+                            {
+                                if (response.body().getSixFollowers()[i].getUserID().equals(mUserId))
+                                {
+                                    
+                                }
+                            }
                             mFollowersRecyclerView.setAdapter(new FollowerAdapter(getActivity(), response.body().getSixFollowers(),
                                     new FollowersClickListener() {
                                         @Override

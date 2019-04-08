@@ -45,9 +45,9 @@ private ArrayList<BooksList> booksLists;
 
         String level;
         if (booksLists.get(position).getLevelNumber() == 1)
-            level = booksLists.get(position).getLevelNumber() + " level";
+            level = booksLists.get(position).getLevelNumber() + context.getString(R.string.level);
         else
-            level = booksLists.get(position).getLevelNumber() + " levels";
+            level = booksLists.get(position).getLevelNumber() + context.getString(R.string.levels);
 
 
         holder.mTxt2.setText(level + " - " + booksLists.get(position).getTeacherName());

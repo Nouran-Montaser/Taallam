@@ -44,25 +44,25 @@ public class WellcomeAdapter extends RecyclerView.Adapter<WellcomeAdapter.myHold
         holder.mTxt2.setText(coursesLists[position].getDescription());
         String level , teacher,student ,question;
         if ( coursesLists[position].getTeachersNumber() == 1)
-            teacher = coursesLists[position].getTeachersNumber() + " teacher";
+            teacher = coursesLists[position].getTeachersNumber() + context.getString(R.string.teacher);
         else
-            teacher = coursesLists[position].getTeachersNumber() + " teachers";
+            teacher = coursesLists[position].getTeachersNumber() + context.getString(R.string.teachers);
 
         if (coursesLists[position].getQuestionsNumber() == 1)
-            question = coursesLists[position].getQuestionsNumber() + " Question";
+            question = coursesLists[position].getQuestionsNumber() + context.getString(R.string.question);
         else
-            question = coursesLists[position].getQuestionsNumber() + " Questions";
+            question = coursesLists[position].getQuestionsNumber() + context.getString(R.string.questions);
 
         if (coursesLists[position].getStudentsNumber() == 1)
-            student = coursesLists[position].getStudentsNumber() + " Student";
+            student = coursesLists[position].getStudentsNumber() + context.getString(R.string.student);
         else
-            student = coursesLists[position].getStudentsNumber() + " Students";
+            student = coursesLists[position].getStudentsNumber() + context.getString(R.string.students);
 
 
         if (coursesLists[position].getLevelsNumber() == 1)
-            level = coursesLists[position].getLevelsNumber() + " Level";
+            level = coursesLists[position].getLevelsNumber() + context.getString(R.string.level);
         else
-            level = coursesLists[position].getLevelsNumber() + " Levels";
+            level = coursesLists[position].getLevelsNumber() + context.getString(R.string.levels);
 
 
 

@@ -74,8 +74,8 @@ public class ForgetPassword2Activity extends AppCompatActivity {
                     } else {
 
                         mLogInProgress = new ProgressDialog(ForgetPassword2Activity.this);
-                        mLogInProgress.setTitle("Logging In");
-                        mLogInProgress.setMessage("Please wait while we check your credentials!");
+                        mLogInProgress.setTitle(getString(R.string.logging_in));
+                        mLogInProgress.setMessage(getString(R.string.prograss_msg));
                         mLogInProgress.setCanceledOnTouchOutside(false);//prevenr user from touch on screen
                         mLogInProgress.show();
 

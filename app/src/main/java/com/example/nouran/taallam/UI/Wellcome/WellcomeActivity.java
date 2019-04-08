@@ -58,14 +58,18 @@ public class WellcomeActivity extends AppCompatActivity {
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                courseId = wellcomeAdapter.getId();
-                Log.i("courseId",course+"");
+                if (wellcomeAdapter.getId() == -1) {
+                    Toast.makeText(WellcomeActivity.this, R.string.welcome_msg, Toast.LENGTH_SHORT).show();
+                } else {
+                    courseId = wellcomeAdapter.getId();
+                    Log.i("courseId", course + "");
 //                getSelection(coursesLists);
 //                Toast.makeText(WellcomeActivity.this, getSelection(coursesLists).getName(), Toast.LENGTH_SHORT).show();
-                Intent mWellcomeIntent = new Intent(WellcomeActivity.this, Wellcome2Activity.class);
-                mWellcomeIntent.putExtra("SelectedCourse",courseId);
-                startActivity(mWellcomeIntent);
-                finish();
+                    Intent mWellcomeIntent = new Intent(WellcomeActivity.this, Wellcome2Activity.class);
+                    mWellcomeIntent.putExtra("SelectedCourse", courseId);
+                    startActivity(mWellcomeIntent);
+                    finish();
+                }
             }
         });
 
@@ -102,7 +106,7 @@ public class WellcomeActivity extends AppCompatActivity {
                             linearLayoutManager.getOrientation());
                     mRecyclerView.addItemDecoration(dividerItemDecoration);
                     wellcomeAdapter = new WellcomeAdapter(WellcomeActivity.this, response.body().getCoursesList(),
-                            null,"welcome");
+                            null, "welcome");
                     mRecyclerView.setAdapter(wellcomeAdapter);
 
                 }

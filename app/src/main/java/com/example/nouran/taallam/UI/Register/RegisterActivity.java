@@ -91,8 +91,8 @@ public class RegisterActivity extends AppCompatActivity {
                     } else {
                         boolean check = Patterns.EMAIL_ADDRESS.matcher(mRegisterMail.getText().toString()).matches();
                         if (check) {
-                            mRegProgress.setTitle("Register ");
-                            mRegProgress.setMessage("Please wait while we check your credentials!");
+                            mRegProgress.setTitle(getString(R.string.register));
+                            mRegProgress.setMessage(getString(R.string.prograss_msg));
                             mRegProgress.setCanceledOnTouchOutside(false);//prevenr user from touch on screen
                             mRegProgress.show();
                             getData(mEmail, mUserName, mPassword, mConfirmedpass);
