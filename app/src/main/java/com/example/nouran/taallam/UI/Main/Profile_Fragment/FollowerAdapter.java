@@ -22,10 +22,10 @@ public class FollowerAdapter extends RecyclerView.Adapter<FollowerAdapter.myHold
 
     private Context context;
     private FollowersClickListener clickListener;
-    private SixFollowers[] sixFollowers;
+    private ArrayList<SixFollowers> sixFollowers;
 
 
-    public FollowerAdapter(Context context, SixFollowers[] sixFollowers , FollowersClickListener clickListener) {
+    public FollowerAdapter(Context context, ArrayList<SixFollowers> sixFollowers , FollowersClickListener clickListener) {
         this.context = context;
         this.sixFollowers = sixFollowers;
         this.clickListener = clickListener;
@@ -41,7 +41,7 @@ public class FollowerAdapter extends RecyclerView.Adapter<FollowerAdapter.myHold
     @Override
     public void onBindViewHolder(myHolder holder, final int position) {
 
-        Picasso.get().load(sixFollowers[position].getUserPictureURL()).placeholder(R.drawable.pp).
+        Picasso.get().load(sixFollowers.get(position).getUserPictureURL()).placeholder(R.drawable.pp).
                 error(R.drawable.pp).into(holder.mFollowerPic);
         holder.mFollowerPic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +56,7 @@ public class FollowerAdapter extends RecyclerView.Adapter<FollowerAdapter.myHold
 
     @Override
     public int getItemCount() {
-        return sixFollowers.length;
+        return sixFollowers.size();
     }
 
     class myHolder extends RecyclerView.ViewHolder {

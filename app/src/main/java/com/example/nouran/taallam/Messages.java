@@ -5,6 +5,7 @@ import com.example.nouran.taallam.Model.Contacts;
 import com.example.nouran.taallam.Model.ConversationMessage;
 import com.example.nouran.taallam.Model.ForumBookPost;
 import com.example.nouran.taallam.Model.Message;
+import com.example.nouran.taallam.Model.UnReadMessages;
 import com.example.nouran.taallam.Model.UserMessage;
 
 import retrofit2.Call;
@@ -27,5 +28,9 @@ public interface Messages {
     public Call<ConversationMessage> conversationMessages(@Field("ConversationUserID") String ConversationUserID,
                                                           @Field("LastMessageID") int LastMessageID, @Field("UserID") String UserID);
 
+
+    @FormUrlEncoded
+    @POST("Messages/UserUnreadMessagesNumber")
+    public Call<UnReadMessages> userUnreadMessagesNumber(@Field("UserID") String UserID);
 
 }

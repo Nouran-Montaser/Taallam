@@ -56,6 +56,7 @@ public class ChatActivity extends Activity {
     private static final String MY_PREFS_NAME = "MyPrefsFile";
     private String conversationUserID;
     private String userId;
+    private int pos;
 
 
     @Override
@@ -112,9 +113,10 @@ public class ChatActivity extends Activity {
                                 if (response.body().getIsSuccess()) {
                                     Toast.makeText(ChatActivity.this, "Send ", Toast.LENGTH_SHORT).show();
                                     getConversationMessages(userId, 0, mUserId);
-                                    if (mAdapter != null)
+                                    if (mAdapter != null) {
                                         mAdapter.notifyDataSetChanged();
-                                    mChatMessageView.setText("");
+                                        mMessagesist.scrollToPosition(mMessagesist.getAdapter().getItemCount()-1);
+                                    }mChatMessageView.setText("");
                                 } else
                                     Toast.makeText(ChatActivity.this, response.body().getErrorMessage(), Toast.LENGTH_SHORT).show();
                             }
@@ -128,8 +130,20 @@ public class ChatActivity extends Activity {
                 }
             }
         });
-
-
+        mMessagesist.addOnLayoutChangeListener(new View.OnLayoutChangeListener()
+        {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom)
+            {
+                if (mMessagesist != null)
+                {
+                    if (bottom < oldBottom)
+                    {
+                        mMessagesist.smoothScrollToPosition(mAdapter.getItemCount() - 1);
+                    }
+                }
+            }
+        });
     }
 
     public void getDetail() {
@@ -142,7 +156,9 @@ public class ChatActivity extends Activity {
                 {
                     if (response.body().getIsSuccess())
                     {
+                        mMessagesist.scrollToPosition(pos-1);
                         mMessagesist.setAdapter(mAdapter);
+//                        mMessagesist.getLayoutManager().scrollToPosition(pos-1);
                         mTitleView.setText(response.body().getUserName());
                         getActionBar().setTitle(response.body().getUserName());
                         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -173,15 +189,18 @@ public class ChatActivity extends Activity {
                         mLinearLayoutManager.setStackFromEnd(true);
                         mMessagesist.setHasFixedSize(true);
                         mMessagesist.setLayoutManager(mLinearLayoutManager);
+                        pos = response.body().getConversationMessages().length;
                         mAdapter = new ChatAdapter(ChatActivity.this, response.body().getConversationMessages());
+//                        mMessagesist.scrollToPosition(pos-1);
                         mMessagesist.setAdapter(mAdapter);
+//                        mMessagesist.getLayoutManager().scrollToPosition(14);
+                        mMessagesist.smoothScrollToPosition(mAdapter.getItemCount()-1);
+
                         mTitleView.setText(response.body().getConversationUserName());
                         getActionBar().setTitle(response.body().getConversationUserName());
                         getActionBar().setDisplayHomeAsUpEnabled(true);
                         Picasso.get().load(response.body().getConversationUserImageUrl()).placeholder(R.drawable.pp).
                                 error(R.drawable.pp).into(mProfileImg);
-
-
                     }
                 }
             }
@@ -192,5 +211,9 @@ public class ChatActivity extends Activity {
         });
     }
 
-
+    @Override
+    public boolean onNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 }

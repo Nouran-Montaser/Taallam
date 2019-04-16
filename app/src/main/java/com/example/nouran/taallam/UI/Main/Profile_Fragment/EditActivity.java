@@ -96,6 +96,9 @@ public class EditActivity extends AppCompatActivity {
         user_name = getIntent().getStringExtra("Name");
         about = getIntent().getStringExtra("About");
 
+        mEditName.setText(user_name);
+        mEditAbout.setText(about);
+
         AndroidNetworking.initialize(getApplicationContext());
         // Adding an Network Interceptor for Debugging purpose :
         OkHttpClient okHttpClient = new OkHttpClient().newBuilder().build();
@@ -267,4 +270,9 @@ public class EditActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 }

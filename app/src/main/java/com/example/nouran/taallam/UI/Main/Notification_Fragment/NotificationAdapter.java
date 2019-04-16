@@ -12,6 +12,8 @@ import com.example.nouran.taallam.Model.AllNotificaions;
 import com.example.nouran.taallam.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.regex.Pattern;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.myHolder> {
@@ -38,10 +40,20 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         String content = allNotificaions[position].getNotificationBody();
         String[] notificationContent = content.split("\"Content\":\"");
-        String[] notificationBody = notificationContent[1].split("\",\"PostID\"");
-        Log.i("ppppppppppp",notificationBody[0] + "            "+notificationBody[1]);
-        holder.mNotificationTxt.setText(notificationBody[0]);
-
+        if (notificationContent[1].contains("\",\"PostID\"")) {
+            String[] notificationBody = notificationContent[1].split("\",\"PostID\"");
+            holder.mNotificationTxt.setText(notificationBody[0]);
+            holder.mNotificationName.setVisibility(View.INVISIBLE);
+        }else {
+            String[] notificationBody = notificationContent[1].split("\",\"FromUserID\"");
+            holder.mNotificationTxt.setText(notificationBody[0]);
+            String[] notificationuserName = notificationContent[1].split("\",\"UserName\"");
+            Log.i("USER NAME ::",(notificationuserName[1]));
+            String [] n = notificationuserName[1].split(Pattern.quote(":\""));
+            Log.i("USER NAME ::",(n[1].split(Pattern.quote("\"}")))[0]);
+            holder.mNotificationName.setVisibility(View.VISIBLE);
+            holder.mNotificationName.setText((n[1].split(Pattern.quote("\"}")))[0]);
+        }
     }
 
 
@@ -54,12 +66,14 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         private CircleImageView mNotificationPImg;
         private TextView mNotificationTxt;
+        private TextView mNotificationName;
 
         public myHolder(final View itemView) {
             super(itemView);
 
             mNotificationPImg = itemView.findViewById(R.id.notification_PImg);
             mNotificationTxt = itemView.findViewById(R.id.notification_Txt);
+            mNotificationName = itemView.findViewById(R.id.notification_name);
         }
     }
 }

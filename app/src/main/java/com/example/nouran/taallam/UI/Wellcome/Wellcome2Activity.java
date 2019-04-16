@@ -83,7 +83,15 @@ public class Wellcome2Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 booksLists = wellcomeAdapter.getBooks();
-                if (booksLists == null || booksLists.size() == 0) {
+                ArrayList<BooksList> selectedBooks = new ArrayList<>();
+                for (int i=0;i<booksLists.size();i++)
+                {
+                    if (booksLists.get(i).isSelected())
+                        selectedBooks.add(booksLists.get(i));
+                }
+
+                Log.i("LLLLLLLL",selectedBooks.size()+"");
+                if (selectedBooks.size() == 0) {
                     Toast.makeText(Wellcome2Activity.this, R.string.wellcome2_msg, Toast.LENGTH_SHORT).show();
                 } else {
 
@@ -93,7 +101,7 @@ public class Wellcome2Activity extends AppCompatActivity {
                     sharedPrefsEditor.apply();
 
                     Intent mMaimIntent = new Intent(Wellcome2Activity.this, MainActivity.class);
-                    setUserBook(userId, booksLists);
+                    setUserBook(userId, selectedBooks);
                     startActivity(mMaimIntent);
                     finish();
                 }
@@ -187,4 +195,10 @@ public class Wellcome2Activity extends AppCompatActivity {
 //        });
 //    }
 
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 }

@@ -205,13 +205,21 @@ public class BookDetailActivity extends AppCompatActivity {
                 mReadBookIntent.putExtra("BOOK_Name", bookName);
                 mReadBookIntent.putExtra("BOOK_URL", bookUrl);
                 startActivity(mReadBookIntent);
+                break;
             }
             case R.id.interactions: {
                 Intent mInteractionBookIntent = new Intent(BookDetailActivity.this, BookInteractionActivity.class);
                 mInteractionBookIntent.putExtra("BOOK_ID", bookId);
                 startActivity(mInteractionBookIntent);
+                break;
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

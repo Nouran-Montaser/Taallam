@@ -14,7 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.nouran.taallam.Model.Login;
+import com.example.nouran.taallam.RetrofitClient;
 import com.example.nouran.taallam.UI.ForgetPassword.ForgetPassword2Activity;
+import com.example.nouran.taallam.UI.Main.MainActivity;
 import com.example.nouran.taallam.Users;
 import com.example.nouran.taallam.Model.Register;
 import com.example.nouran.taallam.R;
@@ -36,6 +39,8 @@ public class RegisterActivity extends AppCompatActivity {
     private String mUserName, mPassword, mConfirmedpass, mFacebookID, mEmail;
     private EditText mConfirmedRegisterPass;
     private ProgressDialog mRegProgress;
+    private static SharedPreferences sharedPrefs;
+    private final String MY_PREFS_NAME = "MyPrefsFile";
 
 
     @Override
@@ -77,11 +82,11 @@ public class RegisterActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(mConfirmedRegisterPass.getText().toString())) {
                     mConfirmedRegisterPass.setError(getString(R.string.required));
                     mConfirmedRegisterPass.requestFocus();
-                } if (mPassword.length() < 6)
-                {
+                }
+                if (mPassword.length() < 6) {
                     mConfirmedRegisterPass.setError(getString(R.string.too_small));
                     mConfirmedRegisterPass.requestFocus();
-                }else {
+                } else {
                     String mConfirmedPass = mRegisterPass.getText().toString(), mPassword = mConfirmedRegisterPass.getText().toString();
                     if (!mConfirmedPass.equals(mPassword)) {
                         mConfirmedRegisterPass.setError(getString(R.string.not_matched));
@@ -123,31 +128,78 @@ public class RegisterActivity extends AppCompatActivity {
                 try {
                     mRegProgress.dismiss();
                     if (response.body().getIsSuccess()) {
-                        Intent mWellcomeIntent = new Intent(RegisterActivity.this, WellcomeActivity.class);
-                        startActivity(mWellcomeIntent);
-                        finish();
                         SharedPreferences.Editor sharedPrefsEditor;
                         final String MY_PREFS_NAME = "MyPrefsFile";
                         sharedPrefsEditor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                         sharedPrefsEditor.putString("UserID", response.body().getUserID());
                         sharedPrefsEditor.apply();
+//                        logIn(mEmail, mPassword);
+                        Intent mWellcomeIntent = new Intent(RegisterActivity.this, WellcomeActivity.class);
+                        startActivity(mWellcomeIntent);
+                        finish();
 
                         Log.i("LLLL", response.body().getUserID());
-                    } else
-                    {
+                    } else {
                         Toast.makeText(RegisterActivity.this, response.body().getErrorMessage(), Toast.LENGTH_SHORT).show();
                         Log.i("LLLL", response.body().getErrorMessage());
-                } }catch (ParseException e) {
+                    }
+                } catch (ParseException e) {
                     e.printStackTrace();
+                    Log.i("LLLL", e.getMessage());
                 }
             }
 
             @Override
             public void onFailure(Call<Register> call, Throwable t) {
                 mRegProgress.dismiss();
-
+                Log.i("LLLL", t.getMessage());
             }
         });
     }
 
+    public void logIn(String email, String password) {
+        Users api = RetrofitClient.getClient(RegisterActivity.this).create(Users.class);
+        Call<Login> call = api.login(email, password, "123456789", "", false);
+        call.enqueue(new Callback<Login>() {
+            @Override
+            public void onResponse(Call<Login> call, Response<Login> response) {
+                try {
+                    Log.i("PLPLPLO", email + " " + password);
+                    if (response.body().getIsSuccess()) {
+                        Log.i("PLPLPLO", response.body().toString());
+                        if (response.body().getIsFirstTime()) {
+                            Intent wellcomeIntent = new Intent(RegisterActivity.this, WellcomeActivity.class);
+                            startActivity(wellcomeIntent);
+                        }
+                        Toast.makeText(RegisterActivity.this, "Done", Toast.LENGTH_SHORT).show();
+                        SharedPreferences.Editor sharedPrefsEditor;
+                        sharedPrefsEditor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                        sharedPrefsEditor.putString("UserID", response.body().getUserID());
+                        sharedPrefsEditor.putBoolean("IsFirstTime", false);
+                        sharedPrefsEditor.apply();
+
+                        Log.i("LILILI", response.body().getUserID());
+                    } else {
+                        Log.i("LILILI", response.body().getErrorMessage());
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    Log.i("PLPLPLO", e.getMessage());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Login> call, Throwable t) {
+                Log.i("FAILUER :", t.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+
+    }
 }

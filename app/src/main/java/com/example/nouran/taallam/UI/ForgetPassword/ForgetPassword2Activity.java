@@ -2,18 +2,24 @@ package com.example.nouran.taallam.UI.ForgetPassword;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.ParseException;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.nouran.taallam.Model.BaseResponse;
+import com.example.nouran.taallam.Model.Login;
 import com.example.nouran.taallam.RetrofitClient;
+import com.example.nouran.taallam.UI.Login.LoginActivity;
 import com.example.nouran.taallam.UI.Main.MainActivity;
 import com.example.nouran.taallam.R;
+import com.example.nouran.taallam.UI.Wellcome.WellcomeActivity;
 import com.example.nouran.taallam.Users;
 
 import java.util.Objects;
@@ -30,7 +36,8 @@ public class ForgetPassword2Activity extends AppCompatActivity {
     private Button mFinishButton;
     private String email;
     private ProgressDialog mLogInProgress;
-
+    private static SharedPreferences sharedPrefs;
+    private final String MY_PREFS_NAME = "MyPrefsFile";
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -89,8 +96,9 @@ public class ForgetPassword2Activity extends AppCompatActivity {
                                 mLogInProgress.dismiss();
                                 if (response.body() != null) {
                                     if (response.body().getIsSuccess()) {
-                                        Intent mMainIntent = new Intent(ForgetPassword2Activity.this, MainActivity.class);
-                                        startActivity(mMainIntent);
+                                        logIn(email,mPass.getText().toString());
+//                                        Intent mMainIntent = new Intent(ForgetPassword2Activity.this, LoginActivity.class);
+//                                        startActivity(mMainIntent);
                                     } else
                                         Toast.makeText(ForgetPassword2Activity.this, response.body().getErrorMessage(), Toast.LENGTH_SHORT).show();
                                 }
@@ -101,11 +109,54 @@ public class ForgetPassword2Activity extends AppCompatActivity {
                                 mLogInProgress.dismiss();
                             }
                         });
-                        Intent mMainIntent = new Intent(ForgetPassword2Activity.this, MainActivity.class);
-                        startActivity(mMainIntent);
                     }
                 }
             }
         });
+    }
+
+    public void logIn(String email , String password)
+    {
+        Users api = RetrofitClient.getClient(ForgetPassword2Activity.this).create(Users.class);
+        Call<Login> call = api.login(email, password, "123456789", "", false);
+        call.enqueue(new Callback<Login>() {
+            @Override
+            public void onResponse(Call<Login> call, Response<Login> response) {
+                try {
+                    if (response.body().getIsSuccess()) {
+                        if (response.body().getIsFirstTime()) {
+                            Intent wellcomeIntent = new Intent(ForgetPassword2Activity.this, WellcomeActivity.class);
+                            startActivity(wellcomeIntent);
+                        } else {
+                            Intent mainactivityIntent = new Intent(ForgetPassword2Activity.this, MainActivity.class);
+                            startActivity(mainactivityIntent);
+                            finish();
+                        }
+                        Toast.makeText(ForgetPassword2Activity.this, "Done", Toast.LENGTH_SHORT).show();
+                        SharedPreferences.Editor sharedPrefsEditor;
+                        sharedPrefsEditor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                        sharedPrefsEditor.putString("UserID", response.body().getUserID());
+                        sharedPrefsEditor.putBoolean("IsFirstTime", false);
+                        sharedPrefsEditor.apply();
+
+                        Log.i("LLLL", response.body().getUserID());
+                    } else {
+                        Log.i("LLLL", response.body().getErrorMessage());
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Login> call, Throwable t) {
+                Log.i("FAILUER :", t.getMessage());
+            }
+        });
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

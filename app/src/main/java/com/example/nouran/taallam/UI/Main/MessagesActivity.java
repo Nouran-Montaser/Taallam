@@ -7,11 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.nouran.taallam.Messages;
 import com.example.nouran.taallam.Model.Contacts;
+import com.example.nouran.taallam.Model.UnReadMessages;
 import com.example.nouran.taallam.R;
 import com.example.nouran.taallam.RetrofitClient;
 import com.example.nouran.taallam.UI.Main.Notification_Fragment.NotificationAdapter;
@@ -31,6 +33,9 @@ public class MessagesActivity extends AppCompatActivity {
     private static SharedPreferences sharedPrefs;
     private SharedPreferences.Editor sharedPrefsEditor;
     private static final String MY_PREFS_NAME = "MyPrefsFile";
+    private int count = 0;
+    private String mUserId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,23 +52,26 @@ public class MessagesActivity extends AppCompatActivity {
         mMsgRecyclerView = findViewById(R.id.msg_recycler_view);
 
         sharedPrefs = MessagesActivity.this.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-        String mUserId = sharedPrefs.getString("UserID", null);
-        getContacts(mUserId);
+        mUserId = sharedPrefs.getString("UserID", null);
 
 
     }
 
-    public void getContacts(String mUserId)
-    {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getContacts(mUserId);
+    }
+
+    public void getContacts(String mUserId) {
         Messages api = RetrofitClient.getClient(MessagesActivity.this).create(Messages.class);
         Call<Contacts> call = api.getMessagesContacts(mUserId);
         call.enqueue(new Callback<Contacts>() {
             @Override
             public void onResponse(Call<Contacts> call, Response<Contacts> response) {
-                if (response.body() != null)
-                {
-                    if (response.body().getIsSuccess())
-                    {
+                if (response.body() != null) {
+                    if (response.body().getIsSuccess()) {
+
                         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MessagesActivity.this);
                         mMsgRecyclerView.setHasFixedSize(true);
                         mMsgRecyclerView.setLayoutManager(linearLayoutManager);
@@ -71,9 +79,8 @@ public class MessagesActivity extends AppCompatActivity {
                         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mMsgRecyclerView.getContext(),
                                 linearLayoutManager.getOrientation());
                         mMsgRecyclerView.addItemDecoration(dividerItemDecoration);
-                        mMsgRecyclerView.setAdapter(new MessageAdapter(MessagesActivity.this,response.body().getMessagesContactList()));
-
-
+                        linearLayoutManager.setReverseLayout(true);
+                        mMsgRecyclerView.setAdapter(new MessageAdapter(MessagesActivity.this, response.body().getMessagesContactList()));
                     }
                 }
             }
@@ -85,5 +92,10 @@ public class MessagesActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
 
+    }
 }

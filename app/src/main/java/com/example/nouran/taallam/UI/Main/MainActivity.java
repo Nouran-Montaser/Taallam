@@ -24,8 +24,10 @@ import android.widget.Button;
 import android.widget.Toast;
 
 //import com.example.nouran.taallam.BottomMenuHelper;
+import com.example.nouran.taallam.Messages;
 import com.example.nouran.taallam.Model.NotificationResponse;
 import com.example.nouran.taallam.Model.SearchUsers;
+import com.example.nouran.taallam.Model.UnReadMessages;
 import com.example.nouran.taallam.Model.User;
 import com.example.nouran.taallam.Notifications;
 import com.example.nouran.taallam.RetrofitClient;
@@ -106,8 +108,20 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.main_item);
 //        BottomMenuHelper.showBadge(this, bottomNavigationView, R.id.navigation, "1");
         // addBadgeView();
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigationView.getChildAt(0);
+        BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(2);
+        notificationBadge = LayoutInflater.from(this).inflate(R.layout.layout_notifications_badge, menuView, false);
         getNotifications();
+//        getMessages();
     }
+
+//    private void add2BadgeView() {
+//        BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigationView.getChildAt(0);
+//        BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(2);
+//
+//        notificationBadge = LayoutInflater.from(this).inflate(R.layout.layout_notifications_badge, menuView, false);
+//        itemView.addView(notificationBadge);
+//    }
 
     private void addBadgeView() {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigationView.getChildAt(0);
@@ -197,10 +211,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<NotificationResponse> call, Response<NotificationResponse> response) {
                 if (response.body() != null) {
-                    n = response.body().getNotificationNumber() + 1;
-                    Log.i("PPPPPPLLLLL", response.body().getIsSuccess() + "   " + response.body().getErrorMessage() + "   " + n + " ");
                     if (response.body().getIsSuccess()) {
-                        if (n > 0) {
+                        if (response.body().getNotificationNumber() > 0) {
                             addBadgeView();
                         } else {
                             refreshBadgeView();
@@ -216,6 +228,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+//    public void getMessages() {
+//        sharedPrefs = MainActivity.this.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+//        String mUserId = sharedPrefs.getString("UserID", null);
+//
+//        Messages api = RetrofitClient.getClient(MainActivity.this).create(Messages.class);
+//        Call<UnReadMessages> call = api.userUnreadMessagesNumber(mUserId);
+//        call.enqueue(new Callback<UnReadMessages>() {
+//            @Override
+//            public void onResponse(Call<UnReadMessages> call, Response<UnReadMessages> response) {
+//                if (response.body().getIsSuccess()) {
+//                    if (response.body().getCount() > 0) {
+//                        add2BadgeView();
+//                    } else {
+//                        refreshBadgeView();
+//                    }
+//                } else
+//                    Toast.makeText(MainActivity.this, response.body().getErrorMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<UnReadMessages> call, Throwable t) {
+//
+//            }
+//        });
+//    }
 
     @Override
     protected void attachBaseContext(Context newBase) {

@@ -41,4 +41,10 @@ public class ReadBookActivity extends AppCompatActivity {
         webView.loadUrl("http://drive.google.com/viewerng/viewer?embedded=true&url="+bookUrl);
 
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 }

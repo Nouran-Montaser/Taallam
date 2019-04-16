@@ -140,5 +140,9 @@ public class BookInteractionActivity extends AppCompatActivity {
         });
 
     }
-
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 }

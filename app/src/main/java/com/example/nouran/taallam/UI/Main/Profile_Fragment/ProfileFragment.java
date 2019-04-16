@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -187,14 +188,15 @@ public class ProfileFragment extends Fragment {
                             mFollowersRecyclerView.setHasFixedSize(true);
                             mFollowersRecyclerView.setLayoutManager(mFollowersLayout);
                             Log.i("getFollowersListLen", response.body().getSixFollowers().length + "");
+                            ArrayList<SixFollowers> mSixFollowers = new ArrayList<>();
                             for (int i =0 ; i < response.body().getSixFollowers().length ; i++)
                             {
-                                if (response.body().getSixFollowers()[i].getUserID().equals(mUserId))
+                                if (!response.body().getSixFollowers()[i].getUserID().equals(mUserId))
                                 {
-                                    
+                                    mSixFollowers.add(response.body().getSixFollowers()[i]);
                                 }
                             }
-                            mFollowersRecyclerView.setAdapter(new FollowerAdapter(getActivity(), response.body().getSixFollowers(),
+                            mFollowersRecyclerView.setAdapter(new FollowerAdapter(getActivity(), mSixFollowers,
                                     new FollowersClickListener() {
                                         @Override
                                         public void OnClick(int position) {
@@ -211,12 +213,12 @@ public class ProfileFragment extends Fragment {
                         if (response.body().getFourBooks().length > 0) {
                             mBooksRecyclerView.setVisibility(View.VISIBLE);
                             mNoBooksTxt.setVisibility(View.GONE);
-                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+                            GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),2, LinearLayoutManager.HORIZONTAL,false);
                             mBooksRecyclerView.setHasFixedSize(true);
-                            mBooksRecyclerView.setLayoutManager(linearLayoutManager);
+                            mBooksRecyclerView.setLayoutManager(layoutManager);
 
                             DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mBooksRecyclerView.getContext(),
-                                    linearLayoutManager.getOrientation());
+                                    layoutManager.getOrientation());
                             mBooksRecyclerView.addItemDecoration(dividerItemDecoration);
                             mBooksRecyclerView.setAdapter(new BooksAdapter(getActivity(), response.body().getFourBooks()));
 

@@ -36,12 +36,12 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.myHolder> {
     @Override
     public void onBindViewHolder(myHolder holder, final int position) {
         holder.mBookName.setText(fourBooks[position].getBookName());
-        String s = String.format("%.2f", fourBooks[position].getPercentage());
+        String s = String.format("%.0f", fourBooks[position].getPercentage());
         float number = Float.valueOf(s);
         Log.i("LOPLOP",number+"");
 
         holder.mDonutProgress.setProgress(number);
-        holder.mAboutTxt.setText(fourBooks[position].getParticipantsNumber()+"");
+        holder.mAboutTxt.setText(fourBooks[position].getParticipantsNumber()+context.getString(R.string.students));
     }
 
 

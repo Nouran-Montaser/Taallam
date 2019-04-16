@@ -49,7 +49,7 @@
     <string name="read_book">قراءه الكتاب</string>
     <string name="book_interactions">التفاعلات علي اكتاب</string>
     <string name="learn_now">تعلم الان</string>
-    <string name="about">عن</string>
+    <string name="about">اكتب عن نفسك…</string>
     <string name="logout">تسجيل الخروج</string>
     <string name="name">الاسم..</string>
     <string name="edit">تعديل</string>
@@ -95,7 +95,7 @@
     <string name="student">طالب</string>
     <string name="students">طلاب</string>
     <string name="wellcome2_msg">يجب اخيار وواحد علي الاقل</string>
-
+    <string name="unread_message">رسالة غير مقروءة</string>
 
 
 </resources>

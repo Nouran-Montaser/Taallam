@@ -123,13 +123,11 @@ public class BooksActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_book_search, menu);
 
-        menu.findItem(R.id.book_search).expandActionView(); // Expand the search menu item in order to show by default the query
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         final SearchView searchView = (SearchView) menu.findItem(R.id.book_search).getActionView();
 
         searchView.setQueryHint(getString(R.string.search_hint));
-        searchView.setSubmitButtonEnabled (true);
         searchView.setIconifiedByDefault(true);
         searchView.setIconified(true);
 
@@ -202,4 +200,8 @@ public class BooksActivity extends AppCompatActivity {
         }, ""));
 
     }
-}
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }}

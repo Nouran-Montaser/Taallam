@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.nouran.taallam.Date;
@@ -39,6 +40,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.myHolder
         Picasso.get().load(contacts[position].getConversationUserImageUrl()).placeholder(R.drawable.pp).
                 error(R.drawable.pp).into(holder.mMessagePImg);
 
+        if (!contacts[position].getIsSeen()) {
+            holder.mUnReadMsg.setVisibility(View.VISIBLE);
+            holder.mMainMessageContainer.setCardBackgroundColor(context.getResources().getColor(R.color.gray));
+        } else
+            holder.mUnReadMsg.setVisibility(View.GONE);
         holder.mMessageDateTxt.setText(Date.formatDate(contacts[position].getLastMessageDate()));
         holder.mMessageContentTxt.setText(contacts[position].getLastMessage());
         holder.mMessageNameTxt.setText(contacts[position].getConversationUserName());
@@ -46,7 +52,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.myHolder
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ChatActivity.class);
-                intent.putExtra("userID",contacts[position].getConversationUserID());
+                intent.putExtra("userID", contacts[position].getConversationUserID());
                 context.startActivity(intent);
             }
         });
@@ -67,6 +73,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.myHolder
         private TextView mMessageContentTxt;
         private CircleImageView mMessagePImg;
         private CardView mMainMessageContainer;
+        private ImageView mUnReadMsg;
 
         public myHolder(final View itemView) {
             super(itemView);
@@ -76,6 +83,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.myHolder
             mMessageContentTxt = itemView.findViewById(R.id.message_ContentTxt);
             mMessagePImg = itemView.findViewById(R.id.message_PImg);
             mMainMessageContainer = itemView.findViewById(R.id.main_message_Container);
+            mUnReadMsg = itemView.findViewById(R.id.UnRead_msg);
         }
     }
 }

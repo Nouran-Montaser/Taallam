@@ -62,7 +62,7 @@ public class WellcomeActivity extends AppCompatActivity {
                     Toast.makeText(WellcomeActivity.this, R.string.welcome_msg, Toast.LENGTH_SHORT).show();
                 } else {
                     courseId = wellcomeAdapter.getId();
-                    Log.i("courseId", course + "");
+                    Log.i("courseId", courseId + "");
 //                getSelection(coursesLists);
 //                Toast.makeText(WellcomeActivity.this, getSelection(coursesLists).getName(), Toast.LENGTH_SHORT).show();
                     Intent mWellcomeIntent = new Intent(WellcomeActivity.this, Wellcome2Activity.class);
@@ -114,6 +114,7 @@ public class WellcomeActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Course> call, Throwable t) {
+
 
             }
         });

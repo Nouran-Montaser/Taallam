@@ -22,6 +22,7 @@ import com.example.nouran.taallam.Users;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -219,8 +220,16 @@ public class FollowActivity extends AppCompatActivity {
                             mFfollowersRecyclerView.setHasFixedSize(true);
                             mFfollowersRecyclerView.setLayoutManager(mFollowersLayout);
                             Log.i("getFollowersListLen", response.body().getSixFollowers().length + "");
+                            ArrayList<SixFollowers> mSixFollowers = new ArrayList<>();
+                            for (int i =0 ; i < response.body().getSixFollowers().length ; i++)
+                            {
+                                if (!response.body().getSixFollowers()[i].getUserID().equals(mUserId))
+                                {
+                                    mSixFollowers.add(response.body().getSixFollowers()[i]);
+                                }
+                            }
                             mFfollowersRecyclerView.setAdapter(new FollowerAdapter(FollowActivity.this,
-                                    response.body().getSixFollowers(), null));
+                                    mSixFollowers, null));
                         }
                         Log.i("PLPLPL", response.body().getIsFollowing() + "  " + userid + "    " + mUserId);
                         if (response.body().getFourBooks().length == 0)
@@ -257,5 +266,10 @@ public class FollowActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
 
+    }
 }

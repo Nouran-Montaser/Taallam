@@ -52,10 +52,13 @@ public class RetrofitClient {
                     .addInterceptor(chain -> {
                         Request request = chain.request();
                         Request newRequest;
-                        request=request.newBuilder().addHeader("Content-Type","application/json")
-                                .addHeader("Token",mUserId)
-                                .addHeader("UserID",mUserId).build();
-
+                        if (mUserId  != null) {
+                            request = request.newBuilder().addHeader("Content-Type", "application/json")
+                                    .addHeader("Token", mUserId)
+                                    .addHeader("UserID", mUserId).build();
+                        }else{
+                            request = request.newBuilder().addHeader("Content-Type", "application/json").build();
+                            }
                         newRequest = request.newBuilder().build();
                         return chain.proceed(newRequest);
                     })

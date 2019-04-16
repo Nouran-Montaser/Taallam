@@ -74,62 +74,49 @@
         </activity>
         <activity
             android:name=".UI.Register.RegisterActivity"
-            android:parentActivityName=".UI.Login.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".UI.ForgetPassword.ForgetPasswordActivity"
-            android:parentActivityName=".UI.Login.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".UI.Wellcome.WellcomeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".UI.ForgetPassword.ForgetPassword2Activity"
-            android:parentActivityName=".UI.ForgetPassword.ForgetPasswordActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".UI.Wellcome.Wellcome2Activity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".UI.Main.MessagesActivity"
-            android:parentActivityName=".UI.Main.MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".UI.Main.Main_Fragment.CommentsActivity"
-            android:parentActivityName=".UI.Main.MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".UI.Main.Category_Fragment.Books.BooksActivity"
-            android:parentActivityName=".UI.Main.MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".UI.Main.Category_Fragment.Books.BookDetailActivity"
-            android:parentActivityName=".UI.Main.Category_Fragment.Books.BooksActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".UI.Main.Category_Fragment.Books.ReadBookActivity"
-            android:parentActivityName=".UI.Main.Category_Fragment.Books.BookDetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".UI.Main.Category_Fragment.Books.BookInteractionActivity"
-            android:parentActivityName=".UI.Main.Category_Fragment.Books.BookDetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".UI.Main.Profile_Fragment.EditActivity"
-            android:parentActivityName=".UI.Main.MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".UI.Main.Profile_Fragment.FollowActivity"
-            android:parentActivityName=".UI.Main.MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".UI.Main.Profile_Fragment.ChatActivity"
-            android:parentActivityName=".UI.Main.Profile_Fragment.FollowActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
         <activity
-            android:name=".UI.Main.SearchActivity"
-            android:parentActivityName=".UI.Main.MainActivity">
+            android:name=".UI.Main.SearchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -138,7 +125,7 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-        <activity android:name=".UI.Main.Profile_Fragment.NewsFeedActivity"></activity>
+        <activity android:name=".UI.Main.Profile_Fragment.NewsFeedActivity" />
     </application>
 
 </manifest>
